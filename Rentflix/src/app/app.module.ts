@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import { OutModule } from './pages/out/out.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -13,7 +15,8 @@ import { OutModule } from './pages/out/out.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    OutModule
+    OutModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
