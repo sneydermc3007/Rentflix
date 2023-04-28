@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SignInComponent } from './pages/out/sign-in/sign-in.component';
-import { SignUpComponent } from './pages/out/sign-up/sign-up.component';
+import { SingComponent } from './pages/out/sign_standalone/sing.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: 'InicioSesion', pathMatch: 'full' },
-  { path: 'InicioSesion', component: SignInComponent },
-  { path: 'Registro', component: SignUpComponent },
+
+  { path: '', redirectTo: 'Sign', pathMatch: 'full' },
+  { path: 'Sign', component: SingComponent },
 
   // Hacer lazy loading de los módulos dentro de la carpeta pages inside
-  { path: 'Inside', loadChildren: () => import('./pages/inside/inside.module').then(m => m.InsideModule) }
+  { path: 'Inside', loadChildren: () => import('./pages/inside/inside.module').then(m => m.InsideModule) },
+  { path: '**', redirectTo: 'Sign'},
+
 ];
 
 @NgModule({
