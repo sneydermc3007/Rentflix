@@ -1,0 +1,36 @@
+* {
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+main div.imagen{
+  width: 100%;
+  display: flex;
+}
+
+div.imagen#fon-sup {
+  justify-content: left;
+  padding-left: 25px;
+}
+
+div.imagen#fon-inf {
+  justify-content: right;
+  bottom: 0px;
+  position: absolute;
+  padding: 25px;
+}
+
+img.img1,
+img.img2 {
+  width: 70%;
+}
+
+@media (max-width: 800px) {
+  img.img1,
+  img.img2 {
+    display: none;
+  }
+}

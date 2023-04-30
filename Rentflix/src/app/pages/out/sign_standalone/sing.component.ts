@@ -13,7 +13,7 @@ import { OutModule } from './../out.module';
   // styleUrls: ['./sing.component.scss'],
   template: `
     <nav class="m-4">
-      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs justify-content-end">
         <li [ngbNavItem]="1">
           <button ngbNavLink>Log In</button>
           <ng-template ngbNavContent>
@@ -28,7 +28,7 @@ import { OutModule } from './../out.module';
         </li>
       </ul>
     </nav>
-    <div [ngbNavOutlet]="nav" class="m-4"></div>
+    <div [ngbNavOutlet]="nav" class=""></div>
   `,
   styles: []
 })
