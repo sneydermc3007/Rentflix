@@ -8,27 +8,27 @@
   <form [formGroup]="formuLogIn" class="container" (ngSubmit)="signIN()">
     <div class="row">
       <div class="col-12 title">
-        <h3 class="text-center">Iniciar Sesión</h3>
+        <h3 class="text-center mb-5">Iniciar Sesión</h3>
       </div>
       <div class="col-12 contenido">
         <div class="row">
           <div class="grid">
             <div class="col-12 user mb-3">
-              User:
               <input
                 type="text"
                 class="form-control"
                 formControlName="usuario_id"
+                placeholder="User"
                 [class.is-invalid]="formuLogIn.get('usuario_id')?.touched && formuLogIn.get('usuario_id')?.invalid"
               >
             </div>
 
             <div class="col-12 password">
-              Password:
               <input
                 type="password"
                 class="form-control"
                 formControlName="usuario_pass"
+                placeholder="Password"
                 [class.is-invalid]="formuLogIn.get('usuario_pass')?.touched && formuLogIn.get('usuario_pass')?.invalid"
               >
               <span style="color: red;"
@@ -38,7 +38,7 @@
             </div>
             <br/>
 
-            <div class="col-12">
+            <div class="col-12 boton">
               <button
                 type="submit"
                 class="btn btn-primary"
