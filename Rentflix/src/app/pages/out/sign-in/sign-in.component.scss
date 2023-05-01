@@ -9,6 +9,7 @@
 main div.imagen{
   width: 100%;
   display: flex;
+  z-index: -1;
 }
 
 div.imagen#fon-sup {
@@ -25,7 +26,8 @@ div.imagen#fon-inf {
 
 img.img1,
 img.img2 {
-  width: 70%;
+  // width: 70%;
+  width: 50%;
 }
 
 @media (max-width: 800px) {
@@ -33,4 +35,20 @@ img.img2 {
   img.img2 {
     display: none;
   }
+}
+
+form .row div.title{
+  color: #1F4489;
+  text-transform: uppercase;
+}
+
+.title h3 {
+  font-weight: revert;
+}
+
+form {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }

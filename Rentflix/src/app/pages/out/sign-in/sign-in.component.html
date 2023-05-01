@@ -5,6 +5,55 @@
     <img class="img1" src="./../../../../assets/Fon_Sup.jpg" alt="">
   </div>
 
+  <form [formGroup]="formuLogIn" class="container" (ngSubmit)="signIN()">
+    <div class="row">
+      <div class="col-12 title">
+        <h3 class="text-center">Iniciar Sesión</h3>
+      </div>
+      <div class="col-12 contenido">
+        <div class="row">
+          <div class="grid">
+            <div class="col-12 user mb-3">
+              User:
+              <input
+                type="text"
+                class="form-control"
+                formControlName="usuario_id"
+                [class.is-invalid]="formuLogIn.get('usuario_id')?.touched && formuLogIn.get('usuario_id')?.invalid"
+              >
+            </div>
+
+            <div class="col-12 password">
+              Password:
+              <input
+                type="password"
+                class="form-control"
+                formControlName="usuario_pass"
+                [class.is-invalid]="formuLogIn.get('usuario_pass')?.touched && formuLogIn.get('usuario_pass')?.invalid"
+              >
+              <span style="color: red;"
+                *ngIf="formuLogIn.controls['usuario_pass'].hasError('minlength')">
+                La contraseña debe tener al menos 6 caracteres
+              </span>
+            </div>
+            <br/>
+
+            <div class="col-12">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="formuLogIn.invalid"
+                >
+                Send
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
   <div class="imagen" id="fon-inf">
     <img class="img2" src="./../../../../assets/Fon_Inf.jpg" alt="">
   </div>

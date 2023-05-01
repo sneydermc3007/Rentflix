@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class SignInComponent {
 
+  constructor() { }
+
+  formuLogIn = new FormGroup({
+    usuario_id: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    usuario_pass: new FormControl('', [Validators.required, Validators.minLength(6)])
+  })
+
+  signIN() {
+    console.log("Valores ingresados: ", this.formuLogIn.value);
+  }
 }
