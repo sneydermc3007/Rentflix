@@ -1,11 +1,15 @@
 # libreria de conexion a base de datos SQL Server
 import pymssql
 
+# Importar el archivo de configuracion
+import config
+
+
 # Datos de conexion
-server = '34.173.255.48'
-database = 'Rentflix'
-usuario = 'sqlserver'
-password = 'profetas 123'
+server = config.DB_SERVER
+database = config.DB_DATABASE
+usuario = config.DB_USER
+password = config.DB_PASSWORD
 
 # print("Drivers:", pyodbc.drivers())
 
@@ -22,7 +26,7 @@ try:
     # result = cursos.fetchall()
     # print("Resultado de la consulta: \n", result)
     
-    conn.close()
+    # conn.close()
 
                     
 except Exception as e:
