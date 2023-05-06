@@ -1,0 +1,24 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  font-weight: bold;
+  margin-bottom: auto;
+}
+
+hr {
+  border-top: 5px solid var(--bs-yellow);
+  border-radius: 8px;
+  margin: 0rem 0;
+  width: 2.5%;
+  opacity: 0.85;
+}
+
+h3 {
+  font-size: larger;
+}
+
+form div.full_name .input-group {
+  width: 80%;
+}
