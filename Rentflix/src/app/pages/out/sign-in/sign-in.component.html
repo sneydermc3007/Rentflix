@@ -18,7 +18,7 @@
                 type="text"
                 class="form-control"
                 formControlName="usuario_id"
-                placeholder="User"
+                placeholder="Usuario"
                 [class.is-invalid]="formuLogIn.get('usuario_id')?.touched && formuLogIn.get('usuario_id')?.invalid"
               >
             </div>
@@ -28,7 +28,7 @@
                 type="password"
                 class="form-control"
                 formControlName="usuario_pass"
-                placeholder="Password"
+                placeholder="Contraseña"
                 [class.is-invalid]="formuLogIn.get('usuario_pass')?.touched && formuLogIn.get('usuario_pass')?.invalid"
               >
               <span style="color: red;"
@@ -44,7 +44,7 @@
                 class="btn btn-primary"
                 [disabled]="formuLogIn.invalid"
                 >
-                Send
+                Enviar
               </button>
             </div>
 
