@@ -18,7 +18,7 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/person-card.svg" >
               </span>
-              <input type="text" class="form-control" placeholder="Ingresa tu nombre completo">
+              <input type="text" class="form-control" placeholder="Ingresa tu nombre completo" [(ngModel)]="fieldName" name="name">
             </div>
           </div>
           <div class="col-4 date">
@@ -33,6 +33,7 @@
                 name="dp"
                 ngbDatepicker
                 #d="ngbDatepicker"
+                [(ngModel)]="fieldDate"
               />
             </div>
           </div>
@@ -59,7 +60,7 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/phone.svg">
               </span>
-              <input type="number" class="form-control" placeholder="Ingresa tu numero de celular">
+              <input type="number" class="form-control" placeholder="Ingresa tu numero de celular" name="numberCelular" [(ngModel)]="fieldNumberC">
             </div>
           </div>
 
@@ -69,7 +70,7 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/telephone-fill.svg">
               </span>
-              <input type="number" class="form-control" placeholder="Ingresa tu numero de fijo">
+              <input type="number" class="form-control" placeholder="Ingresa tu numero de fijo" name="numberFijo" [(ngModel)]="fieldNumberF">
             </div>
           </div>
         </div>
@@ -83,14 +84,14 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/map.svg">
               </span>
-              <input type="text" class="form-control" placeholder="Ingresa calle">
+              <input type="text" class="form-control" placeholder="Ingresa calle" name="street-address" [(ngModel)]="fieldStreet_Address">
             </div>
           </div>
 
           <div class="col-2 number-street">
             <label>Numero</label>
             <div class="input-group mt-2">
-              <input type="text" class="form-control" placeholder="Ingresa numero">
+              <input type="text" class="form-control" placeholder="Ingresa numero" name="number-address" [(ngModel)]="fieldNumber_Address">
             </div>
           </div>
 
@@ -109,7 +110,7 @@
           <div class="col-6 comments">
             <label>Comentarios</label>
             <div class="input-group mt-2">
-              <textarea type="text" class="form-control" placeholder="Ingresa comentarios adicionales"></textarea>
+              <textarea type="text" class="form-control" placeholder="Ingresa comentarios adicionales" name="comments-address" [(ngModel)]="fieldComments_Address"></textarea>
             </div>
           </div>
         </div>
@@ -122,7 +123,7 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/mail-fill.svg" >
               </span>
-              <input type="email" class="form-control" placeholder="Ingresa tu correo">
+              <input type="email" class="form-control" placeholder="Ingresa tu correo" name="cuenta-correo" [(ngModel)]="fieldCorreo">
             </div>
           </div>
 
@@ -132,7 +133,7 @@
               <span class="input-group-text">
                 <img src="./../../../../assets/icons/mail-check.svg" >
               </span>
-              <input type="email" class="form-control" placeholder="Confirme su correo">
+              <input type="email" class="form-control" placeholder="Confirme su correo" name="cuenta-correoCheck" [(ngModel)]="fieldCorreoConfirmation">
             </div>
           </div>
 
@@ -150,7 +151,7 @@
                 </ng-template>
               </span>
               <input
-                type="password" id="inputPassword" class="form-control" placeholder="Ingresa una contraseña">
+                type="password" id="inputPassword" class="form-control" placeholder="Ingresa una contraseña" name="cuenta-pass" [(ngModel)]="fieldPass">
             </div>
           </div>
         </div>
