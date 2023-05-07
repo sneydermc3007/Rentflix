@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask import Flask, request
 
 from conexion_BD import *
 
@@ -11,7 +12,7 @@ def get_databases():
     rows = cursos.fetchall()
     return jsonify(rows)
 
-from flask import Flask, request
+
 
 app = Flask(__name__)
 
@@ -33,7 +34,6 @@ def guardar_datos():
     cursor.execute("INSERT INTO Datos (correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                    correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password)
     conn.commit()
-    
     return 'Datos guardados exitosamente'
 
 if __name__ == '__main__':
