@@ -12,10 +12,6 @@ def get_databases():
     rows = cursos.fetchall()
     return jsonify(rows)
 
-
-
-app = Flask(__name__)
-
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
     correo = request.json['correo']
@@ -30,14 +26,24 @@ def guardar_datos():
     num_fijo = request.json['num_fijo']
     password = request.json['password']
     
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO Datos (correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password) VALUES (@correo, @date, @direccion_comments, @direccion_number, @direccion_street, @direccion_type, @fullname, @genero, @num_celular, @num_fijo, @password)",
-                   correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password)
-    conn.commit()
-    return 'Datos guardados exitosamente'
-
-if __name__ == '__main__':
-    app.run()
+    query = """ INSERT INTO Datos (
+                correo,  password, 
+                direccion_comments, direccion_number, direccion_street, direccion_type, 
+                fullname, genero, num_celular, num_fijo, date
+                ) 
+            VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )
+            """
+    parametros = (correo, password, direccion_comments, direccion_number, direccion_street, direccion_type,fullname, genero, num_celular, num_fijo, date)
+    
+    try: 
+        cursos.execute(query, parametros)
+        conn.commit()
+        return jsonify({"message": "Datos guardados exitosamente"})
+    except Exception as e:
+        return 'Error al guardar los datos: ' + str(e), 500
+    finally:
+        cursos.close()
+        conn.close()
 
 
 if __name__ == '__main__':
