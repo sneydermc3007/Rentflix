@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../services/auth.service';
+import { RegistroUsuario } from "../modules/auth.interface";
 
 @Component({
   selector: 'app-sign-up',
@@ -24,7 +26,7 @@ export class SignUpComponent implements OnInit {
   ];
   public selectTypeHouseValue: any;
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(private datePipe: DatePipe, private _auth: AuthService) { }
 
   fieldName: string = '';
   fieldDate: NgbDateStruct = { year: 0, month: 0, day: 0 };
@@ -62,18 +64,24 @@ export class SignUpComponent implements OnInit {
     if( this.fieldCorreo !== this.fieldCorreoConfirmation ){
       alert('Los correos no coinciden');
     } else {
-      console.log({
-        fullname: this.fieldName,
-        date,
+
+      let dataForm: RegistroUsuario = {
+        nombreCompleto: this.fieldName,
         genero: this.selectGender,
-        numero_celular: this.fieldNumberC,
-        numero_fijo: this.fieldNumberF,
-        direccion_street: this.fieldStreet_Address,
-        direccion_number: this.fieldNumber_Address,
-        direccion_type: this.selectTypeHouseValue,
-        direccion_comments: this.fieldComments_Address,
+        num_celular: this.fieldNumberC,
+        num_fijo: this.fieldNumberF,
+        fecha_nacimiento: date,
+        comments: this.fieldComments_Address,
+        number: this.fieldNumber_Address,
+        street: this.fieldStreet_Address,
+        type: this.selectTypeHouseValue,
         correo: this.fieldCorreo,
         password: this.fieldPass
+      };
+
+      this._auth.postRegister(dataForm).subscribe((res) => {
+        console.log('Respuesta del servidor: ', res);
+        alert('Registro exitoso, estas son tus credenciales: \n' + 'Usuario: ' + res.user + '\n' + 'Contraseña: ' + res.password);
       });
     }
 
