@@ -31,7 +31,7 @@ def guardar_datos():
     password = request.json['password']
     
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO Datos (correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password) VALUES (Aun no se cuales son los valores en DB)",
+    cursor.execute("INSERT INTO Datos (correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password) VALUES (@correo, @date, @direccion_comments, @direccion_number, @direccion_street, @direccion_type, @fullname, @genero, @num_celular, @num_fijo, @password)",
                    correo, date, direccion_comments, direccion_number, direccion_street, direccion_type, fullname, genero, num_celular, num_fijo, password)
     conn.commit()
     return 'Datos guardados exitosamente'
