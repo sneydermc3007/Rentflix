@@ -39,5 +39,9 @@ export class AuthService {
     )
 
   }
+
+  userLogged(): boolean {
+    return !!localStorage.getItem('User')
+  }
 }
 
