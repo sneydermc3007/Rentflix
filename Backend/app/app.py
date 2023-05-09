@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask import Flask, request
+from flask import Flask, jsonify, request
 
 from conexion_BD import *
 
@@ -44,6 +45,24 @@ def guardar_datos():
     finally:
         cursos.close()
         conn.close()
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    #Captura desde el front
+    correo = request.json['correo']
+    contrasena = request.json['contrasena']
+
+    # Obtener el usuario
+    cursos= conn.cursor()
+    cursos.execute("SELECT idPersona, NombreCompleto, rol FROM Personas WHERE username=? AND password=?", (correo, contrasena))
+    user = cursos.fetchone()
+
+    if not user:
+        return jsonify({'error': 'Usuario y/o contraseña inválidos'})
+
+    # Devolver la información del usuario como respuesta en formato JSON
+    return jsonify({'idPersona': user[0], 'NombreCompleto': user[1], 'rol': user[2]})
 
 
 if __name__ == '__main__':
