@@ -50,19 +50,19 @@ def guardar_datos():
 @app.route('/login', methods=['POST'])
 def login():
     #Captura desde el front
-    correo = request.json['correo']
-    contrasena = request.json['contrasena']
+    Correo = request.json['Correo']
+    Contrasena = request.json['Contrasena']
 
     # Obtener el usuario
     cursos= conn.cursor()
-    cursos.execute("SELECT idPersona, NombreCompleto, rol FROM Personas WHERE username=? AND password=?", (correo, contrasena))
+    cursos.execute("SELECT idPersona, NombreCompleto, Rol FROM peliculas.Personas WHERE Correo=? AND Contrasena=?", (Correo, Contrasena))
     user = cursos.fetchone()
 
     if not user:
         return jsonify({'error': 'Usuario y/o contraseña inválidos'})
 
     # Devolver la información del usuario como respuesta en formato JSON
-    return jsonify({'idPersona': user[0], 'NombreCompleto': user[1], 'rol': user[2]})
+    return jsonify({'idPersona': user[0], 'NombreCompleto': user[1], 'Rol': user[2]})
 
 
 if __name__ == '__main__':
