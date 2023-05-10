@@ -55,7 +55,7 @@ def login():
 
     # Obtener el usuario
     cursos= conn.cursor()
-    cursos.execute("SELECT idPersona, NombreCompleto, Rol FROM peliculas.Personas WHERE Correo=? AND Contrasena=?", (Correo, Contrasena))
+    cursos.execute("SELECT idPersona, NombreCompleto, Rol FROM peliculas.Credenciales, peliculas.Personas WHERE peliculas.Credenciales.Correo= %s and peliculas.Credenciales.Contrasena=%s ", (Correo, Contrasena))
     user = cursos.fetchone()
 
     if not user:
