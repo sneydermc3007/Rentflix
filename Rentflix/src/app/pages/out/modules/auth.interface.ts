@@ -13,6 +13,7 @@ export interface RegistroUsuario {
 }
 
 export interface LoginUsuario {
-  user: string | number;
-  password: string;
+  idPersona: number;
+  NombreCompleto: string;
+  Rol: string;
 }

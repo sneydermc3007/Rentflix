@@ -79,10 +79,10 @@ export class SignUpComponent implements OnInit {
         password: this.fieldPass
       };
 
-      this._auth.postRegister(dataForm).subscribe((res) => {
-        console.log('Respuesta del servidor: ', res);
-        alert('Registro exitoso, estas son tus credenciales: \n' + 'Usuario: ' + res.user + '\n' + 'Contraseña: ' + res.password);
-      });
+      // this._auth.postRegister(dataForm).subscribe((res) => {
+      //   console.log('Respuesta del servidor: ', res);
+      //   alert('Registro exitoso, estas son tus credenciales: \n' + 'Usuario: ' + res.user + '\n' + 'Contraseña: ' + res.password);
+      // });
     }
 
 

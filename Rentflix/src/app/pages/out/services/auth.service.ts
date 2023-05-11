@@ -14,8 +14,27 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  postRegister(datos: RegistroUsuario): Observable<LoginUsuario> {
+  getUser(correo: string, password: string): Observable<LoginUsuario> {
+    return this.http.post<LoginUsuario>('http://localhost:5000/login', {
+      correo,
+      contrasena: password
+    }, {
+      headers: {'Content-Type': 'application/json'}
+    }).pipe(
+      tap((res: LoginUsuario) => {
+        // console.log('Respuesta del servidor: ', res)
 
+        // Persistencia de datos mientras el navegador este abierto
+        localStorage.setItem('User', JSON.stringify(res))
+        return res
+      }),
+      catchError((error) => {
+        return throwError(error)
+      })
+    )
+  }
+
+  postRegister(datos: RegistroUsuario): Observable<LoginUsuario> {
     return this.http.post<LoginUsuario>('localhost:3000/datosRegistro', {
       fullname: datos.nombreCompleto,
       genero: datos.genero,
