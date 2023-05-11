@@ -15,6 +15,8 @@ def get_databases():
 
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
+    
+    # Recoleccion de datos desde el front
     correo = request.json['correo']
     date = request.json['date']
     direccion_comments = request.json['direccion_comments']
@@ -27,21 +29,46 @@ def guardar_datos():
     num_fijo = request.json['num_fijo']
     password = request.json['password']
     
-    query = """ INSERT INTO Datos (
-                correo,  password, 
-                direccion_comments, direccion_number, direccion_street, direccion_type, 
-                fullname, genero, num_celular, num_fijo, date
-                ) 
-            VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s )
-            """
-    parametros = (correo, password, direccion_comments, direccion_number, direccion_street, direccion_type,fullname, genero, num_celular, num_fijo, date)
     
-    try: 
-        cursos.execute(query, parametros)
+    # Obtener el numero de registros actuales de Personas
+    cursos.execute(""" SELECT TOP 1 idPersona AS ULTIMOREGISTRO
+                    FROM Peliculas.Personas
+                    ORDER BY idPersona DESC """
+    )
+    num_registros = cursos.fetchone()
+    
+    num_registros['ULTIMOREGISTRO'] = num_registros['ULTIMOREGISTRO'] + 1
+    print("iD nuevo registro: ", num_registros['ULTIMOREGISTRO'])    
+    
+    # Primer Query
+    query_1 = """ INSERT INTO Peliculas.Personas (
+        idPersona, NombreCompleto, Genero, FechaNacimiento, Rol, idDireccion, idCredencial
+    ) VALUES ( %s, %s, %s, %s, %s, %s, %s ) """   
+    
+    parametros_1 = (num_registros['ULTIMOREGISTRO'], fullname, genero, date, 'Usuario', num_registros['ULTIMOREGISTRO'], num_registros['ULTIMOREGISTRO'])
+     
+    # Segundo Query
+    query_2 = """ INSERT INTO Peliculas.Credenciales (
+        idCredenciales, Correo, Contrasena
+        ) VALUES ( %s, %s, %s ) """
+        
+    parametros_2 = (num_registros['ULTIMOREGISTRO'], correo, password)
+    
+    # Tercer Query
+    query_3 = """ INSERT INTO Peliculas.Direcciones ( 
+        idDirecciones, DireccionCalleCarrera, DireccionNumero, TipoVivienda, Comentario, NumCelular, NumFijo
+        ) VALUES ( %s, %s, %s, %s, %s, %s, %s ) """
+        
+    parametros_3 = (num_registros['ULTIMOREGISTRO'], direccion_street, direccion_number, direccion_type, direccion_comments, num_celular, num_fijo)
+    
+    try:
+        cursos.execute(query_3, parametros_3)
+        cursos.execute(query_2, parametros_2)
+        cursos.execute(query_1, parametros_1)
         conn.commit()
-        return jsonify({"message": "Datos guardados exitosamente"})
+        return jsonify({"message": "Datos guardados exitosamente", "num_registros": num_registros['ULTIMOREGISTRO']})
     except Exception as e:
-        return 'Error al guardar los datos: ' + str(e), 500
+        return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
     finally:
         cursos.close()
         conn.close()
@@ -54,7 +81,6 @@ def login():
     Contrasena = request.json['Contrasena']
 
     # Obtener el usuario
-    cursos= conn.cursor()
     cursos.execute("SELECT idPersona, NombreCompleto, Rol FROM peliculas.Credenciales, peliculas.Personas WHERE peliculas.Credenciales.Correo= %s and peliculas.Credenciales.Contrasena=%s ", (Correo, Contrasena))
     user = cursos.fetchone()
 
@@ -66,4 +92,6 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run()
+    # app.run()
+    app.run(debug=True)
+    
