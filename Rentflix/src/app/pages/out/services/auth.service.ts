@@ -25,7 +25,7 @@ export class AuthService {
         // console.log('Respuesta del servidor: ', res)
 
         // Persistencia de datos mientras el navegador este abierto
-        localStorage.setItem('User', JSON.stringify(res))
+        sessionStorage.setItem('User', JSON.stringify(res))
         return res
       }),
       catchError((error) => {
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   userLogged(): boolean {
-    return !!localStorage.getItem('User')
+    return !!sessionStorage.getItem('User')
   }
 }
 

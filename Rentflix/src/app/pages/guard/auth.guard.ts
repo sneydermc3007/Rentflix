@@ -11,7 +11,6 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-
       if (!this._auth.userLogged()) {
 
         console.error('No estás logueado')
@@ -19,7 +18,6 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/Sign'])
         return false;
       }
-
 
     return true;
   }
