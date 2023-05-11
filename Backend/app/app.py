@@ -66,7 +66,7 @@ def guardar_datos():
         cursos.execute(query_2, parametros_2)
         cursos.execute(query_1, parametros_1)
         conn.commit()
-        return jsonify({"message": "Datos guardados exitosamente", "num_registros": num_registros['ULTIMOREGISTRO']})
+        return jsonify({"message": "Datos guardados exitosamente", "num_registros": num_registros['ULTIMOREGISTRO']}), 200
     except Exception as e:
         return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
     finally:
@@ -76,19 +76,33 @@ def guardar_datos():
 
 @app.route('/login', methods=['POST'])
 def login():
-    #Captura desde el front
-    Correo = request.json['Correo']
-    Contrasena = request.json['Contrasena']
+    # Captura desde el front
+    correo = request.json.get('correo')
+    contrasena = request.json.get('contrasena')
 
-    # Obtener el usuario
-    cursos.execute("SELECT idPersona, NombreCompleto, Rol FROM peliculas.Credenciales, peliculas.Personas WHERE peliculas.Credenciales.Correo= %s and peliculas.Credenciales.Contrasena=%s ", (Correo, Contrasena))
-    user = cursos.fetchone()
+    if not correo or not contrasena:
+        return jsonify({'error': 'Por favor ingrese todos los datos'}), 400
 
-    if not user:
-        return jsonify({'error': 'Usuario y/o contraseña inválidos'})
+    try:
+        # Obtener el usuario
+        cursos.execute(""" SELECT idPersona, NombreCompleto, Rol FROM peliculas.Credenciales
+                          JOIN peliculas.Personas ON peliculas.Personas.idPersona = peliculas.Credenciales.idCredenciales
+                          WHERE peliculas.Credenciales.Correo=%s 
+                          AND peliculas.Credenciales.Contrasena=%s """,
+                       (correo, contrasena))
+        user = cursos.fetchone()
+        print("Usuario obtenido: ", user)
+        
+        if user is None:
+            return jsonify({'error': 'Usuario y/o contraseña inválidos'}), 401
 
-    # Devolver la información del usuario como respuesta en formato JSON
-    return jsonify({'idPersona': user[0], 'NombreCompleto': user[1], 'Rol': user[2]})
+        user = list(user.values())
+
+        return jsonify({'idPersona': user[0], 'NombreCompleto': user[1], 'Rol': user[2]}), 200
+
+    except Exception as e:
+        return jsonify({"message": "Error al obtener los datos en la BD: " + str(e)}), 500
+
 
 
 if __name__ == '__main__':
