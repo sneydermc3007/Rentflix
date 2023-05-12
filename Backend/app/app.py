@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from conexion_BD import *
+import hashlib
 
 app = Flask(__name__)
 
@@ -12,6 +13,8 @@ def get_databases():
     cursos.execute("SELECT name, database_id, create_date FROM sys.databases;")
     rows = cursos.fetchall()
     return jsonify(rows)
+
+
 
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
@@ -87,7 +90,7 @@ def login():
     correo = request.json.get('correo')
     contrasena = request.json.get('contrasena')
 
-    if not correo or not contrasena:
+    if  correo == "" or  contrasena=="":
         return jsonify({'error': 'Por favor ingrese todos los datos'}), 400
 
     try:
