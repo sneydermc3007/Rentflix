@@ -1,13 +1,13 @@
 export interface RegistroUsuario {
   nombreCompleto: string;
   genero: string;
-  num_celular: number | string;
-  num_fijo: number | string;
+  num_celular: string;
+  num_fijo: string;
   fecha_nacimiento: string;
-  comments: string | null;
-  number: string;
-  street: string;
-  type: string;
+  address_comments: string | null;
+  address_number: string | number;
+  address_street: string;
+  address_type: string;
   correo: string;
   password: string;
 }
