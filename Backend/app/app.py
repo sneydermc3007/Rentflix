@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from conexion_BD import *
+import hashlib
 
 app = Flask(__name__)
 
@@ -12,6 +13,8 @@ def get_databases():
     cursos.execute("SELECT name, database_id, create_date FROM sys.databases;")
     rows = cursos.fetchall()
     return jsonify(rows)
+
+
 
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
@@ -29,31 +32,41 @@ def guardar_datos():
     num_fijo = request.json['num_fijo']
     password = request.json['password']
     
+    # Validacion de la cantidad de registros
+    cursos.execute(""" SELECT COUNT(*) AS CANTIDADREGISTROS FROM Peliculas.Personas """)
+    cantidad_registros = cursos.fetchone()
+    print("Cantidad de registros: ", cantidad_registros['CANTIDADREGISTROS'])
     
-    # Obtener el numero de registros actuales de Personas
-    cursos.execute(""" SELECT TOP 1 idPersona AS ULTIMOREGISTRO
-                    FROM Peliculas.Personas
-                    ORDER BY idPersona DESC """
-    )
-    num_registros = cursos.fetchone()
-    
-    num_registros['ULTIMOREGISTRO'] = num_registros['ULTIMOREGISTRO'] + 1
-    print("iD nuevo registro: ", num_registros['ULTIMOREGISTRO'])    
+    if(cantidad_registros['CANTIDADREGISTROS'] > 0 ):
+        
+        # Obtener el numero de registros actuales de Personas
+        cursos.execute(""" SELECT TOP 1 idPersona AS ULTIMOREGISTRO
+                        FROM Peliculas.Personas
+                        ORDER BY idPersona DESC """
+        )
+        num_registros = cursos.fetchone()
+        
+        num_registros['ULTIMOREGISTRO'] = num_registros['ULTIMOREGISTRO'] + 1
+        print("iD nuevo registro: ", num_registros['ULTIMOREGISTRO'])
+    else:
+        print("No hay registros anteriores")
+        num_registros = {'ULTIMOREGISTRO': 1}
+        print("iD nuevo registro: ", num_registros['ULTIMOREGISTRO'])
     
     # Primer Query
     query_1 = """ INSERT INTO Peliculas.Personas (
         idPersona, NombreCompleto, Genero, FechaNacimiento, Rol, idDireccion, idCredencial
     ) VALUES ( %s, %s, %s, %s, %s, %s, %s ) """   
-    
+
     parametros_1 = (num_registros['ULTIMOREGISTRO'], fullname, genero, date, 'Usuario', num_registros['ULTIMOREGISTRO'], num_registros['ULTIMOREGISTRO'])
-     
+        
     # Segundo Query
     query_2 = """ INSERT INTO Peliculas.Credenciales (
         idCredenciales, Correo, Contrasena
         ) VALUES ( %s, %s, %s ) """
         
     parametros_2 = (num_registros['ULTIMOREGISTRO'], correo, password)
-    
+
     # Tercer Query
     query_3 = """ INSERT INTO Peliculas.Direcciones ( 
         idDirecciones, DireccionCalleCarrera, DireccionNumero, TipoVivienda, Comentario, NumCelular, NumFijo
@@ -69,9 +82,6 @@ def guardar_datos():
         return jsonify({"message": "Datos guardados exitosamente", "num_registros": num_registros['ULTIMOREGISTRO']}), 200
     except Exception as e:
         return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
-    finally:
-        cursos.close()
-        conn.close()
 
 
 @app.route('/login', methods=['POST'])
@@ -80,7 +90,7 @@ def login():
     correo = request.json.get('correo')
     contrasena = request.json.get('contrasena')
 
-    if not correo or not contrasena:
+    if  correo == "" or  contrasena=="":
         return jsonify({'error': 'Por favor ingrese todos los datos'}), 400
 
     try:
