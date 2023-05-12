@@ -19,6 +19,7 @@ def get_databases():
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
     
+
     # Recoleccion de datos desde el front
     correo = request.json['correo']
     date = request.json['date']
@@ -31,7 +32,10 @@ def guardar_datos():
     num_celular = request.json['num_celular']
     num_fijo = request.json['num_fijo']
     password = request.json['password']
-    
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    hashed_correo = hashlib.sha256(correo.encode()).hexdigest()
+
     # Validacion de la cantidad de registros
     cursos.execute(""" SELECT COUNT(*) AS CANTIDADREGISTROS FROM Peliculas.Personas """)
     cantidad_registros = cursos.fetchone()
@@ -65,7 +69,7 @@ def guardar_datos():
         idCredenciales, Correo, Contrasena
         ) VALUES ( %s, %s, %s ) """
         
-    parametros_2 = (num_registros['ULTIMOREGISTRO'], correo, password)
+    parametros_2 = (num_registros['ULTIMOREGISTRO'], hashed_correo, hashed_password)
 
     # Tercer Query
     query_3 = """ INSERT INTO Peliculas.Direcciones ( 
@@ -84,13 +88,18 @@ def guardar_datos():
         return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
 
 
+
+
 @app.route('/login', methods=['POST'])
 def login():
     # Captura desde el front
     correo = request.json.get('correo')
     contrasena = request.json.get('contrasena')
 
-    if  correo == "" or  contrasena=="":
+    hashed_contrasena = hashlib.sha256(contrasena.encode()).hexdigest()
+    hashed_correo = hashlib.sha256(correo.encode()).hexdigest()
+
+    if not correo or not contrasena:
         return jsonify({'error': 'Por favor ingrese todos los datos'}), 400
 
     try:
@@ -99,10 +108,10 @@ def login():
                           JOIN peliculas.Personas ON peliculas.Personas.idPersona = peliculas.Credenciales.idCredenciales
                           WHERE peliculas.Credenciales.Correo=%s 
                           AND peliculas.Credenciales.Contrasena=%s """,
-                       (correo, contrasena))
+                       (hashed_correo, hashed_contrasena))
         user = cursos.fetchone()
         print("Usuario obtenido: ", user)
-        
+
         if user is None:
             return jsonify({'error': 'Usuario y/o contraseña inválidos'}), 401
 
