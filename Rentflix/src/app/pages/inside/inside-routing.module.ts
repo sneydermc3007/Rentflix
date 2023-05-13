@@ -5,11 +5,13 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { SellerComponent } from './seller/seller.component';
 import { CustomerComponent } from './customer/customer.component';
+import { TypeUserGuard } from '../guard/type-user.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canActivateChild: [TypeUserGuard],
     children: [
       { path: 'administrador', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), component: AdminComponent },
       { path: 'vendedor', loadChildren: () => import('./seller/seller.module').then(m => m.SellerModule), component: SellerComponent },

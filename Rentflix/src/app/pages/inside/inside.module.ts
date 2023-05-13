@@ -5,6 +5,8 @@ import { InsideRoutingModule } from './inside-routing.module';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from '../out/services/auth.service';
 import  { SharedModule } from './../../shared/shared.module';
+import { TypeUserGuard } from '../guard/type-user.guard';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +20,6 @@ import  { SharedModule } from './../../shared/shared.module';
   exports: [
     HomeComponent
   ],
-  providers: [ AuthService ]
+  providers: [ AuthService, TypeUserGuard ]
 })
 export class InsideModule { }
