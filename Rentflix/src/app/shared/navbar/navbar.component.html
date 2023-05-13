@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <div [ngSwitch]="tipoUser">
+      <div *ngSwitchCase="'Usuario'">
+        <a class="navbar-brand">Usuario</a>
+      </div>
+      <div *ngSwitchCase="'Vendedor'">
+        <a class="navbar-brand">Vendedor</a>
+      </div>
+      <div *ngSwitchCase="'Administrador'">
+        <a class="navbar-brand">Administrador</a>
+      </div>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" *ngIf="userSession.Rol === 'Usuario'" routerLink="/cliente" type="button">Inicio</a>
+          <a class="nav-link active" aria-current="page" *ngIf="userSession.Rol === 'Vendedor'" routerLink="/vendedor">Inicio</a>
+          <a class="nav-link active" aria-current="page" *ngIf="userSession.Rol === 'Administrador'" routerLink="/administrador">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features (Momentaneo) </a>
+        </li>
+        <!-- <li> Prueba de uso de ng-content
+          <ng-content></ng-content>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>

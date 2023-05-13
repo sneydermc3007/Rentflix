@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { OutModule } from './pages/out/out.module';
 import { AuthGuard } from "./pages/guard/auth.guard";
+import { InsideModule } from './pages/inside/inside.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     OutModule,
-    NgbModule
+    NgbModule,
+    InsideModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

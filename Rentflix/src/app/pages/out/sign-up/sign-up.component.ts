@@ -61,20 +61,6 @@ export class SignUpComponent implements OnInit {
     const newDate = new Date(this.fieldDate.year, this.fieldDate.month - 1, this.fieldDate.day);
     let date = this.formatDate(newDate);
 
-    // console.log({
-    //   fullname: this.fieldName,
-    //   date,
-    //   genero: this.selectGender,
-    //   numero_celular: this.fieldNumberC,
-    //   numero_fijo: this.fieldNumberF,
-    //   direccion_street: this.fieldStreet_Address,
-    //   direccion_number: this.fieldNumber_Address,
-    //   direccion_type: this.selectTypeHouseValue,
-    //   direccion_comments: this.fieldComments_Address,
-    //   correo: this.fieldCorreo,
-    //   password: this.fieldPass
-    // });
-
     if ( this.fieldName === '' || date === '' || this.selectGender === '' ||
       this.fieldNumberC === '' || this.fieldNumberF === '' ||
       this.fieldStreet_Address === '' || this.fieldNumber_Address === '' ||

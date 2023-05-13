@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class SignInComponent {
 
-  constructor(private _auth: AuthService) { }
+  constructor(private _auth: AuthService, private router: Router) {
+   }
 
   formuLogIn = new FormGroup({
     usuario_mail: new FormControl('', [Validators.required, Validators.email]),
@@ -29,6 +31,7 @@ export class SignInComponent {
       this._auth.getUser(String(usuario_mail), usuario_pass).subscribe(
         (res) => {
           console.log('Respuesta de Flask: ', res)
+          this.router.navigate(['/Inside'])
         },
         (error: HttpErrorResponse ) => {
           console.log('Se obtuvo un error: ', error)

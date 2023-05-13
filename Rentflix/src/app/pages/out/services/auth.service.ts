@@ -58,5 +58,13 @@ export class AuthService {
   userLogged(): boolean {
     return !!sessionStorage.getItem('User')
   }
+
+  getUserSession() {
+    try {
+      return JSON.parse(sessionStorage.getItem('User') as string);
+    } catch (error) {
+      console.error("Error al obtener el usuario de la sesión: ", error)
+    }
+  }
 }
 

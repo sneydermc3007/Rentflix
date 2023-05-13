@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { InsideRoutingModule } from './inside-routing.module';
 import { HomeComponent } from './home/home.component';
-
+import { AuthService } from '../out/services/auth.service';
+import  { SharedModule } from './../../shared/shared.module'
 
 @NgModule({
   declarations: [
@@ -11,10 +12,12 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     CommonModule,
-    InsideRoutingModule
+    InsideRoutingModule,
+    SharedModule
   ],
   exports: [
     HomeComponent
-  ]
+  ],
+  providers: [ AuthService ]
 })
 export class InsideModule { }
