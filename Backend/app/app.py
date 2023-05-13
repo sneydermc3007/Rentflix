@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from conexion_BD import *
-import hashlib
+import hashlib,os
 
 app = Flask(__name__)
 
@@ -18,8 +18,6 @@ def get_databases():
 
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
-    
-
     # Recoleccion de datos desde el front
     correo = request.json['correo']
     date = request.json['date']
@@ -121,6 +119,34 @@ def login():
 
     except Exception as e:
         return jsonify({"message": "Error al obtener los datos en la BD: " + str(e)}), 500
+
+
+
+
+@app.route('/peliculas', methods=['POST'])
+def agregar_pelicula():
+    id_pelicula = request.json['idPelicula']
+    nom_pelicula = request.json['NomPelicula']
+    duracion = request.json['Duracion']
+    precio = request.json['Precio']
+    sinopsis = request.json['Sinopsis']
+    cant_disponible = request.json['CantDisponible']
+    id_proveedor = request.json['idProveedor']
+    id_tipo_pelicula = request.json['idTipoPelicula']
+    imagen = request.files['Imagen']
+
+
+    query_3 = """ INSERT INTO peliculas.Peliculas ( 
+        idPelicula, NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, idProveedor, idTipoPelicula,Imagen
+        ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
+    
+    parametros3 =  (id_pelicula, nom_pelicula, duracion, precio, sinopsis, cant_disponible, id_proveedor, id_tipo_pelicula,imagen)
+    try:
+        cursos.execute(query_3, parametros3 )
+        conn.commit()
+        return jsonify({'mensaje': 'Película agregada correctamente'})
+    except:
+        return jsonify({'mensaje': 'Error al agregar la película'})
 
 
 
