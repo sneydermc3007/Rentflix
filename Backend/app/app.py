@@ -14,7 +14,7 @@ def get_databases():
     rows = cursos.fetchall()
     return jsonify(rows)
 
-
+#REGISTRO
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
     # Recoleccion de datos desde el front
@@ -84,7 +84,7 @@ def guardar_datos():
     except Exception as e:
         return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
 
-
+#API LOGIN
 @app.route('/login', methods=['POST'])
 def login():
     # Captura desde el front
@@ -117,6 +117,7 @@ def login():
     except Exception as e:
         return jsonify({"message": "Error al obtener los datos en la BD: " + str(e)}), 500
     
+#API AGREGAR PELICULAS
 @app.route('/peliculas', methods=['POST'])
 def agregar_pelicula():
     id_pelicula = request.json['idPelicula']
@@ -143,7 +144,7 @@ def agregar_pelicula():
         return jsonify({'mensaje': 'Error al agregar la película'})
     
 
-
+#API OBTENER PELICULAS
 @app.route('/peliculasObt')
 def get_movie():
     
@@ -152,7 +153,7 @@ def get_movie():
     rows = cursos.fetchall()
     return jsonify(rows)
 
-
+#API AGREGAR CITAS
 @app.route('/citas', methods=['POST'])
 def agregar_cita():
     datos_cita = request.json
@@ -173,6 +174,26 @@ def agregar_cita():
     
     return 'Cita agregada exitosamente', 201 
 
+
+#API AGREGAR DATOS A PROVEEDOR
+@app.route('/proveedores', methods=['POST'])
+def agregar_prov():
+    datos_prov = request.json
+    
+    id_proveedor = datos_prov['idProveedor']
+    nom_proveedor = datos_prov['NomProveedor']
+    sitioWeb = datos_prov['SitioWeb']
+    imagen = datos_prov['Imagen']
+
+    consulta = """
+            INSERT INTO peliculas.DatosProveedor (idProveedor, NomProveedor, SitioWeb, Imagen)
+            VALUES (%s,%s,%s,%s)
+        """
+    parametros= (id_proveedor, nom_proveedor,sitioWeb, imagen)
+    cursos.execute(consulta, parametros)
+    conn.commit()
+    
+    return 'Proveedor agregado exitosamente', 201 
 
 
 if __name__ == '__main__':
