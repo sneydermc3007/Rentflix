@@ -19,7 +19,9 @@ export class TypeUserGuard implements CanActivateChild {
       return true;
     } else if (currentUserType === 'Usuario' &&  state.url === '/Inside/cliente') {
       return true;
-    }
+    } else if (currentUserType === 'Usuario' &&  state.url === '/Inside/cliente/citas') {
+      return true;
+     }
 
     // Si no es ninguno de los anteriores, redirigir a la página de inicio
     this.router.navigate(['/Inside']);

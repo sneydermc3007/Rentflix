@@ -1,0 +1,73 @@
+h2.title-principal {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-weight: bolder;
+  font-style: italic;
+  padding: 0px 20px 10px 20px;
+}
+
+div.container {
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  color: white;
+  // width: fit-content;
+  border-radius: 10px;
+}
+
+.sideL h3 {
+  font-weight: bolder;
+  color: var(--color-primary);
+}
+
+.sideR h3 {
+  font-weight: bolder;
+  color: var(--color-secondary);
+}
+
+.form-control {
+  padding: 0.35rem
+}
+
+.sideL form .row .col-8{
+  justify-content: center;
+  margin: 0 auto;
+  gap: 10px;
+  margin-top: 0px;
+  align-items: center;
+
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 0px 20px 20px 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.sideL form div .col-8 label {
+  margin-top: 20px;
+}
+
+.sideL form button {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 10px;
+  margin-top: 0px;
+  align-items: center;
+  background: var(--color-primary);
+  color: white;
+  font-weight: bold;
+}
+
+.sideR table tbody tr td.acciones {
+  display: flex;
+  gap: 10px;
+}
+
+table thead tr {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+table thead tr th {
+  font-weight: bold;
+}
+
