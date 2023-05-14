@@ -15,7 +15,6 @@ def get_databases():
     return jsonify(rows)
 
 
-
 @app.route('/datosRegistro', methods=['POST'])
 def guardar_datos():
     # Recoleccion de datos desde el front
@@ -86,8 +85,6 @@ def guardar_datos():
         return jsonify({"message": "Error al guardar los datos: " + str(e)}), 500
 
 
-
-
 @app.route('/login', methods=['POST'])
 def login():
     # Captura desde el front
@@ -123,15 +120,11 @@ def login():
 
 @app.route('/peliculasObt')
 def get_movie():
-   
-    consulta = """
-            SELECT *
-            FROM peliculas.Peliculas
-        """
-    cursos.execute(consulta)
-    pelicula = cursos.fetchone()
-
-    return pelicula
+    
+    cursos.execute(""" SELECT NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, Peliculas.Imagen, NomProveedor, SitioWeb
+                        FROM peliculas.Peliculas, peliculas.DatosProveedor """)
+    rows = cursos.fetchall()
+    return jsonify(rows)
 
 
 
