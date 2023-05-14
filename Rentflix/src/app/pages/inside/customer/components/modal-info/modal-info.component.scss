@@ -13,3 +13,8 @@ table thead th,
 table.add thead th {
   font-weight: bold;
 }
+
+a {
+  border: none;
+  color: var(--color-primary) !important;
+}

@@ -16,7 +16,7 @@ export class SignInComponent {
 
   formuLogIn = new FormGroup({
     usuario_mail: new FormControl('', [Validators.required, Validators.email]),
-    usuario_pass: new FormControl('', [Validators.required, Validators.minLength(6)])
+    usuario_pass: new FormControl('', [Validators.required, Validators.minLength(5)])
   })
 
   signIN() {

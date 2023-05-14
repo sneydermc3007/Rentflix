@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Detalles {{data.nombre}}</h4>
+  <h4 class="modal-title">Detalles {{data.NomPelicula}}</h4>
 </div>
 <div class="modal-body">
   <table class="table">
@@ -12,9 +12,9 @@
     </thead>
     <tbody>
       <tr>
-        <td>${{data.precio}}</td>
-        <td>{{data.duracion}} minutos</td>
-        <td>{{data.descripcion}}</td>
+        <td>${{data.Precio}}</td>
+        <td>{{data.Duracion}} minutos</td>
+        <td>{{data.Sinopsis}}</td>
       </tr>
     </tbody>
   </table>
@@ -25,12 +25,16 @@
     <thead>
       <tr>
         <th scope="col">Provedor</th>
+        <th scope="col">Web</th>
         <th scope="col">Categorias</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>{{data.provedor}}</td>
+        <td>{{data.NomProveedor}}</td>
+        <td>
+          <a>{{data.SitioWeb}}</a>
+        </td>
         <td>
           <ul>
             <li *ngFor="let categoria of data.categorias">{{categoria}}</li>

@@ -23,13 +23,13 @@
   <div class="grid">
     <div class="row">
       <div class="col-3 px-5 mt-2" *ngFor="let movie of Peliculas">
-        <div class="card" style="width: 18rem;" (click)="openModal(movie.nombre)">
-          <img src="{{movie.imagen}}" alt="" class="card-img-top" style="aspect-ratio: 1 / 1">
+        <div class="card" style="width: 18rem;" (click)="openModal(movie.NomPelicula)">
+          <img src="{{movie.Imagen}}" alt="" class="card-img-top" style="aspect-ratio: 1 / 1">
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{movie.nombre}}</h5>
+            <h5 class="card-title">{{movie.NomPelicula}}</h5>
             <div class="card-text">
-              <span class="stock mb-1" [ngClass]="movie.stock > 0 ? 'stock-disponible' : 'stock-agotado'">
-                Disponible: {{movie.stock}}
+              <span class="stock mb-1" [ngClass]="movie.CantDisponible > 0 ? 'stock-disponible' : 'stock-agotado'">
+                Disponible: {{movie.CantDisponible}}
               </span>
             </div>
           </div>
