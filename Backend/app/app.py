@@ -183,13 +183,13 @@ def agregar_prov():
     id_proveedor = datos_prov['idProveedor']
     nom_proveedor = datos_prov['NomProveedor']
     sitioWeb = datos_prov['SitioWeb']
-    imagen = datos_prov['Imagen']
+    Imagen = datos_prov['Imagen']
 
     consulta = """
             INSERT INTO peliculas.DatosProveedor (idProveedor, NomProveedor, SitioWeb, Imagen)
             VALUES (%s,%s,%s,%s)
         """
-    parametros= (id_proveedor, nom_proveedor,sitioWeb, imagen)
+    parametros= (id_proveedor, nom_proveedor,sitioWeb, Imagen)
     cursos.execute(consulta, parametros)
     conn.commit()
     
