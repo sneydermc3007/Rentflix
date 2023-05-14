@@ -18,8 +18,15 @@
             </option>
           </select>
 
+          <!-- <label>Pelicula:</label>
+          <input type="text" class="form-control" name="movie" placeholder="Pelicula" required [(ngModel)]="fieldMovie"> -->
+
           <label>Pelicula:</label>
-          <input type="text" class="form-control" name="movie" placeholder="Pelicula" required [(ngModel)]="fieldMovie">
+          <select class="form-select" name="movie" [(ngModel)]="selectMovieValue">
+            <option *ngFor="let movie of peliculasDisponible" [value]="movie.value">
+              {{ movie.label }}
+            </option>
+          </select>
 
           <label>Fecha cita:</label>
           <input type="date" class="form-control" name="fecha" placeholder="Fecha cita" required [(ngModel)]="fieldDate">

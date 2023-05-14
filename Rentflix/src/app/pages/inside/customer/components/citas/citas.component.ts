@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-citas',
@@ -21,17 +22,36 @@ export class CitasComponent  implements OnInit {
     { local: 'Norte', pelicula: 'Prueba 3', date: '2021-05-03', hour: '12:00' },
   ]
 
-  public fieldMovie: string = '';
+  public selectMovieValue: any;
   public fieldDate: string = '';
   public fieldHour: string = '';
 
   public data: any[] = new Array();
+  public peliculasDisponible: any[] = [];
 
-    constructor() { }
+    constructor(private _movies: MoviesService) { }
 
     ngOnInit(): void {
       console.log('CitasComponent');
       this.data = this.reservationUser;
+
+      this._movies.getMovies().subscribe(
+        (data) => {
+          console.log('Peliculas disponibles: ', data);
+          data.map((x: any, index: number) => {
+            this.peliculasDisponible.push({
+              id: index,
+              value: x.NomPelicula,
+              label: x.NomPelicula
+            })
+          })
+
+          console.log('Peliculas: ', this.peliculasDisponible);
+        },
+        (error) => {
+          console.error('Error al obtener las películas: ', error);
+        }
+      );
     }
 
     registrarCita() {
@@ -40,12 +60,12 @@ export class CitasComponent  implements OnInit {
 
       this.data.push({
         local: this.selectLocationValue,
-        pelicula: this.fieldMovie,
+        pelicula: this.selectMovieValue,
         date: this.fieldDate,
         hour: this.fieldHour
       })
       this.selectLocationValue = '';
-      this.fieldMovie = '';
+      this.selectMovieValue = '';
       this.fieldDate = '';
       this.fieldHour = '';
     }
