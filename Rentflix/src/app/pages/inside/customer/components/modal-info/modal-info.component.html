@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h4 class="modal-title">Detalles {{data.nombre}}</h4>
+</div>
+<div class="modal-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col-2">Precio</th>
+        <th scope="col-4">Duracion</th>
+        <th scope="col-6">Sipnosis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>${{data.precio}}</td>
+        <td>{{data.duracion}} minutos</td>
+        <td>{{data.descripcion}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5 class="pt-3">Informacion adicional</h5>
+  <!--Una tabla que muestre el provedor y todas las categorias-->
+  <table class="table add">
+    <thead>
+      <tr>
+        <th scope="col">Provedor</th>
+        <th scope="col">Categorias</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{data.provedor}}</td>
+        <td>
+          <ul>
+            <li *ngFor="let categoria of data.categorias">{{categoria}}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

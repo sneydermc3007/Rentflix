@@ -1,1 +1,40 @@
-<p>customer works!</p>
+<div class="jumbotron text-white py-4">
+  <div class="container py-2">
+    <h1>Rentflix</h1>
+    <h3 class="mb-4">
+      La mejor seleccion de películas en un solo lugar
+    </h3>
+    <p>
+      Disfruta de las mejores películas en línea con Rentflix.
+      Nuestra plataforma te ofrece una selección impresionante de películas de todo el mundo y de todas las épocas.
+      Con sinopsis detalladas, reparto, críticas y calificaciones de usuarios, encontrarás todo lo que necesitas para
+      tomar una decisión informada. Navega y busca películas de manera rápida y sencilla, ¡y únete a la comunidad de
+      Rentflix hoy mismo!
+    </p>
+  </div>
+</div>
+
+<!--Peliculas -->
+<section class="mb-5">
+  <div class="container">
+    <h2 class="mt-2 py-3">Películas</h2>
+  </div>
+
+  <div class="grid">
+    <div class="row">
+      <div class="col-3 px-5 mt-2" *ngFor="let movie of Peliculas">
+        <div class="card" style="width: 18rem;" (click)="openModal(movie.nombre)">
+          <img src="{{movie.imagen}}" alt="" class="card-img-top" style="aspect-ratio: 1 / 1">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{movie.nombre}}</h5>
+            <div class="card-text">
+              <span class="stock mb-1" [ngClass]="movie.stock > 0 ? 'stock-disponible' : 'stock-agotado'">
+                Disponible: {{movie.stock}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

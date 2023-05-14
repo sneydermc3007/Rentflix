@@ -1,0 +1,15 @@
+
+table.add thead tr {
+  background: var(--color-primary);
+  color: white;
+}
+
+table thead tr {
+  background: var(--color-secondary);
+  color: white;
+}
+
+table thead th,
+table.add thead th {
+  font-weight: bold;
+}
