@@ -18,7 +18,7 @@ import { TypeUserGuard } from '../guard/type-user.guard';
     SharedModule
   ],
   exports: [
-    HomeComponent
+    HomeComponent,
   ],
   providers: [ AuthService, TypeUserGuard ]
 })
