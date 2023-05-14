@@ -193,7 +193,31 @@ def agregar_prov():
     cursos.execute(consulta, parametros)
     conn.commit()
     
-    return 'Proveedor agregado exitosamente', 201 
+    return jsonify({'mensaje': 'Proveedor agregado correctamente'})
+
+#API PARA ACTUALIZAR PROVEEDOR
+@app.route('/proveedoresUpd/<int:id>', methods=['PUT'])
+def actualizar_prov(id):
+    datos_prov = request.json
+    
+    nom_proveedor = datos_prov.get('NomProveedor')
+    sitioWeb = datos_prov.get('SitioWeb')
+    imagen = datos_prov.get('Imagen')
+
+    consulta = """
+            UPDATE peliculas.DatosProveedor 
+            SET NomProveedor = %s, SitioWeb = %s, Imagen = %s
+            WHERE idProveedor = %s
+        """
+    parametros= (nom_proveedor, sitioWeb, imagen, id)
+    cursos.execute(consulta, parametros)
+    conn.commit()
+    
+    if cursos.rowcount == 0:
+        return 'Proveedor no encontrado', 404
+    else:
+        return 'Proveedor actualizado exitosamente', 200 
+
 
 
 if __name__ == '__main__':
