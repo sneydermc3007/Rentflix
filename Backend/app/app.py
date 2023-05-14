@@ -153,6 +153,27 @@ def get_movie():
     return jsonify(rows)
 
 
+@app.route('/citas', methods=['POST'])
+def agregar_cita():
+    datos_cita = request.json
+    
+    id_cita = datos_cita['idCita']
+    nom_persona = datos_cita['NomPersona']
+    fecha_cita = datos_cita['FechaCita']
+    id_local = datos_cita['idLocal']
+    pelicula_dispo = datos_cita['PeliculaDispo']
+
+    consulta = """
+            INSERT INTO ventas.Citas (idCita, NomPersona, FechaCita, idLocal, PeliculaDispo)
+            VALUES (%s,%s,%s,%s,%s)
+        """
+    parametros= (id_cita, nom_persona,fecha_cita,id_local,pelicula_dispo)
+    cursos.execute(consulta, parametros)
+    conn.commit()
+    
+    return 'Cita agregada exitosamente', 201 
+
+
 
 if __name__ == '__main__':
     # app.run()
