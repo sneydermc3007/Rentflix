@@ -7,4 +7,21 @@ import { Component } from '@angular/core';
 })
 export class AdminComponent {
 
+  constructor() { }
+
+  openModalProvedores() {
+    console.log("Modal Provedores");
+  }
+
+  openModalPeliculas() {
+    console.log("Modal Peliculas");
+  }
+
+  openModalLocales() {
+    console.log("Modal Locales");
+  }
+
+  openModalHorarios() {
+    console.log("Modal Horarios");
+  }
 }
