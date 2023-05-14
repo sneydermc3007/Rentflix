@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+// Modales
+import { ProvedoresComponent } from './components/provedores/provedores.component';
 
 @Component({
   selector: 'app-admin',
@@ -7,10 +11,11 @@ import { Component } from '@angular/core';
 })
 export class AdminComponent {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   openModalProvedores() {
     console.log("Modal Provedores");
+    this.modalService.open(ProvedoresComponent, { size: 'xl', centered: true });
   }
 
   openModalPeliculas() {
