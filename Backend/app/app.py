@@ -120,29 +120,62 @@ def login():
 #API AGREGAR PELICULAS
 @app.route('/peliculas', methods=['POST'])
 def agregar_pelicula():
-    id_pelicula = request.json['idPelicula']
     nom_pelicula = request.json['NomPelicula']
     duracion = request.json['Duracion']
     precio = request.json['Precio']
     sinopsis = request.json['Sinopsis']
     cant_disponible = request.json['CantDisponible']
-    id_proveedor = request.json['idProveedor']
-    id_tipo_pelicula = request.json['idTipoPelicula']
+    proveedor = request.json['Proveedor']
+    # id_tipo_pelicula = request.json['idTipoPelicula']
     imagen = request.json['Imagen']
-
-
-    query_3 = """ INSERT INTO peliculas.Peliculas ( 
-        idPelicula, NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, idProveedor, idTipoPelicula,Imagen
-        ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """
-
-    parametros3 =  (id_pelicula, nom_pelicula, duracion, precio, sinopsis, cant_disponible, id_proveedor, id_tipo_pelicula,imagen)
-    try:
-        cursos.execute(query_3, parametros3 )
-        conn.commit()
-        return jsonify({'mensaje': 'Película agregada correctamente'})
-    except:
-        return jsonify({'mensaje': 'Error al agregar la película'})
     
+    cursos.execute(""" SELECT MAX(idPelicula) AS CANTIDADREGISTROS FROM peliculas.Peliculas """)
+    cantidad_registros = cursos.fetchone()
+    id_pelicula = cantidad_registros['CANTIDADREGISTROS'] + 1
+    
+    print("Cantidad de registros: ", id_pelicula)
+    
+    try:
+        query_1 = """ SELECT * FROM peliculas.DatosProveedor
+                            WHERE NomProveedor = %s """
+        parametros_1 = (proveedor)
+        cursos.execute(query_1, parametros_1)
+        proveedor = cursos.fetchone()
+        print("Proveedor obtenido: ", proveedor)
+        id_proveedor = proveedor['idProveedor']
+        
+        if proveedor is None:
+            return jsonify({'mensaje': 'Proveedor no encontrado'}), 400
+        
+        query_2 = """ INSERT INTO peliculas.Peliculas (
+            idPelicula, NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, idProveedor, idTipoPelicula,Imagen
+        ) VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s ) """      
+        parametros_2 = (id_pelicula, nom_pelicula, duracion, precio, sinopsis, cant_disponible, id_proveedor, '1',imagen)
+        cursos.execute(query_2, parametros_2)
+        conn.commit()
+        
+        return jsonify({'mensaje': 'Película agregada correctamente'})      
+    except:
+        return jsonify({'mensaje': 'Error al agregar la película'}), 500
+    
+
+# GET PELICULAS ID
+@app.route('/peliculas/ID', methods=['POST'])
+def obtener_peliculas_id():
+    datos_pelicula = request.json
+    nom_pelicula = datos_pelicula.get('NomPelicula')
+    
+    try:
+        query = """ SELECT * FROM peliculas.Peliculas WHERE NomPelicula = %s """
+        parametros = (nom_pelicula)
+        cursos.execute(query, parametros)
+        pelicula = cursos.fetchone()
+        print("Pelicula obtenida: ", pelicula)
+        
+        return jsonify({'idPelicula': pelicula['idPelicula']})
+        
+    except:
+        return jsonify({'mensaje': 'Error al obtener las películas'}), 500
 
 #ACTUALIZAR PELICULAS
 @app.route('/peliculasUpd/<int:id_pelicula>', methods=['PUT'])
@@ -156,26 +189,24 @@ def actualizar_pelicula(id_pelicula):
     precio = datos_pelicula.get('Precio')
     sinopsis = datos_pelicula.get('Sinopsis')
     cant_disponible = datos_pelicula.get('CantDisponible')
-    id_proveedor = datos_pelicula.get('idProveedor')
-    id_tipo_pelicula = datos_pelicula.get('idTipoPelicula')
     imagen = datos_pelicula.get('Imagen')
+    
+    try:
+        query_3 = """ UPDATE peliculas.Peliculas 
+                        SET NomPelicula = %s, Duracion = %s, Precio = %s, Sinopsis = %s, CantDisponible = %s, Imagen = %s
+                        WHERE idPelicula = %s
+        """
+        parametros_3 = (nom_pelicula, duracion, precio, sinopsis, cant_disponible, imagen, id_pelicula)
+        cursos.execute(query_3, parametros_3)
+        conn.commit()
+        
+        return jsonify({'mensaje': 'Película editada correctamente'})
+        
+    except:
+        return jsonify({'mensaje': 'Error al editar película'}), 500
 
-    # construye la consulta para actualizar la película con el id especificado
-    consulta = """
-        UPDATE peliculas.Peliculas 
-        SET NomPelicula=%s, Duracion=%s, Precio=%s, Sinopsis=%s, CantDisponible=%s, idProveedor=%s, idTipoPelicula=%s, Imagen=%s
-        WHERE idPelicula=%s
-    """
-    # ejecuta la consulta con los parámetros correspondientes
-    parametros = (nom_pelicula, duracion, precio, sinopsis, cant_disponible, id_proveedor, id_tipo_pelicula, imagen, id_pelicula)
-    cursos.execute(consulta, parametros)
-    conn.commit()
 
-    # retorna la película actualizada
-    return jsonify({'mensaje': 'Película actualizada correctamente'})
-
-
-#API ELIMINAR PELICULA
+#API ELIMINAR PELICULA (No)
 @app.route('/peliculasDel/<int:id_pelicula>', methods=['DELETE'])
 def eliminar_pelicula(id_pelicula):
     consulta = "DELETE FROM peliculas.Peliculas WHERE idPelicula = %s"
@@ -247,7 +278,7 @@ def agregar_prov():
     except:
         return jsonify({'mensaje': 'Error al agregar el proveedor'})
 
-#API PARA ACTUALIZAR PROVEEDOR
+#API PARA ACTUALIZAR PROVEEDOR (No)
 @app.route('/proveedoresUpd/<int:id>', methods=['PUT'])
 def actualizar_prov(id):
     datos_prov = request.json
@@ -270,13 +301,13 @@ def actualizar_prov(id):
     else:
         return 'Proveedor actualizado exitosamente', 200 
 
-
 #API GET PROVEEDORES
 @app.route('/proveedoresObt')
 def get_prov():
     cursos.execute(""" SELECT idProveedor, NomProveedor, SitioWeb, Imagen FROM peliculas.DatosProveedor; """)
     rows = cursos.fetchall()
     return jsonify(rows)
+
 
 if __name__ == '__main__':
     # app.run()
