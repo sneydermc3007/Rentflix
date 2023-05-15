@@ -48,14 +48,16 @@ export class ProvedoresComponent implements OnInit {
   }
 
   registrarProvedor() {
+
+    this.listProvedores.push({
+      NomProveedor: this.nombreProvedor,
+      SitioWeb: this.webProvedor,
+      Imagen: this.imageProvedor
+    });
+
     this._proveedores.postProveedores(this.nombreProvedor, this.webProvedor, this.imageProvedor)
     .subscribe((res) => {
       console.log("Provedor registrado: ", res);
-      this.listProvedores.push({
-        NomProveedor: this.nombreProvedor,
-        SitioWeb: this.webProvedor,
-        Imagen: this.imageProvedor
-      });
     },
       (error) => console.log("Error: ", error)
     )

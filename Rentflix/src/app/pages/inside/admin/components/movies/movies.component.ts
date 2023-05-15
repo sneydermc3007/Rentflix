@@ -20,7 +20,6 @@ export class MoviesComponent implements OnInit {
   fieldStock: string = '';
   fieldSupplier: string = '';
   fieldPoster: string = '';
-  fieldWebProvedor: string = '';
   fieldDescription: string = '';
   fieldCategorias: string = '';
   fieldPrice: string = '';
@@ -45,22 +44,41 @@ export class MoviesComponent implements OnInit {
 
   editMovie(pNombre: string) {
     console.log('displayFormEdit: ', pNombre);
+    this._movie.getIdMovie(pNombre).subscribe(
+      (data) => {
+        console.log('ID de la película: ', data);
+        modalRef.componentInstance.id = data.idPelicula;
+      },
+      (error) => {
+        console.error('Error al obtener el ID de la película: ', error);
+      }
+    )
+
     const modalRef = this.modalService.open(NgbdModal2Content, { size: 'lg'});
     modalRef.componentInstance.data = this.ListaPeliculas.find(x => x.NomPelicula === pNombre);
   }
 
-  addMovie(){
+  addMovie() {
     const movie = {
-      name: this.fieldName,
-      duration: this.fieldDuration,
-      stock: this.fieldStock,
-      supplier: this.fieldSupplier,
-      poster: this.fieldPoster,
-      webProvedor: this.fieldWebProvedor,
-      description: this.fieldDescription,
-      categorias: this.fieldCategorias,
-      price: this.fieldPrice
+      NomPelicula: this.fieldName,
+      Duracion: this.fieldDuration,
+      CantDisponible: this.fieldStock,
+      Proveedor: this.fieldSupplier,
+      Imagen: this.fieldPoster,
+      Sinopsis: this.fieldDescription,
+      Categorias: this.fieldCategorias,
+      Precio: this.fieldPrice
     }
+
+    this._movie.crearMovie(movie).subscribe(
+      (data) => {
+        console.log('Pelicula creada: ', data);
+        this.ListaPeliculas.push(data);
+      },
+      (error) => {
+        console.error('Error al crear la película: ', error);
+      }
+    )
 
     this.changeView = !this.changeView;
   }
@@ -94,6 +112,7 @@ export class MoviesComponent implements OnInit {
       font-weight: 700;
     }
   `],
+  providers: [MoviesService],
   template: `
     <h3  class="mt-2" style="text-align: center;"> {{"EDITAR REGISTROS"}}</h3>
 
@@ -111,14 +130,6 @@ export class MoviesComponent implements OnInit {
             <input type="number" class="form-control" name="duration" placeholder="{{data.Duracion}}" [(ngModel)]="editfieldDuration">
           </div>
           <!--Row 2-->
-          <div class="col-6">
-            <label>Provedor</label>
-            <input type="text" class="form-control" name="provedor" placeholder="{{data.NomProveedor}}" [(ngModel)]="editfieldSupplier">
-          </div>
-          <div class="col-6">
-            <label>Web provedor</label>
-            <input type="text" class="form-control" name="web-provedor" placeholder="{{data.SitioWeb}}" [(ngModel)]="editfieldWebProvedor">
-          </div>
           <!--Row 3-->
           <div class="col-12">
             <label>Poster pelicula</label>
@@ -154,35 +165,45 @@ export class MoviesComponent implements OnInit {
 export class NgbdModal2Content implements OnInit {
 
   @Input() data: any;
+  @Input() id: any;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal, private movie: MoviesService) {}
 
   editfieldName: any;
   editfieldDuration: any;
   editfieldStock: any;
-  editfieldSupplier: any;
   editfieldPoster: any;
-  editfieldWebProvedor: any;
   editfieldDescription: any;
   editfieldCategorias: any;
   editfieldPrice: any;
 
-  ngOnInit() {}
+  valoresTemp: any;
+
+  ngOnInit() {
+    this.valoresTemp = JSON.parse(JSON.stringify(this.data));
+  }
 
   edit() {
     let nuevosValores = {
-      nombre: this.editfieldName,
-      duration: this.editfieldDuration,
-      provedor: this.editfieldSupplier,
-      webProvedor: this.editfieldWebProvedor,
-      img: this.editfieldPoster,
-      descripcion: this.editfieldDescription,
-      categorias: this.editfieldCategorias,
-      precio: this.editfieldPrice,
-      stock: this.editfieldStock
+      NomPelicula: this.editfieldName === undefined ? this.valoresTemp.NomPelicula : this.editfieldName,
+      Duracion: this.editfieldDuration === undefined ? this.valoresTemp.Duracion : this.editfieldDuration,
+      Imagen: this.editfieldPoster === undefined ? this.valoresTemp.Imagen : this.editfieldPoster,
+      Sinopsis: this.editfieldDescription === undefined ? this.valoresTemp.Sinopsis : this.editfieldDescription,
+      Precio: this.editfieldPrice === undefined ? this.valoresTemp.Precio : this.editfieldPrice,
+      CantDisponible: this.editfieldStock === undefined ? this.valoresTemp.CantDisponible : this.editfieldStock,
     };
 
     console.log('nuevosValores: ', nuevosValores);
+    console.log('id: ', this.id);
+
+    this.movie.editarMovie(this.id, nuevosValores).subscribe(
+      (data) => {
+        console.log('Pelicula actualizada: ', data);
+      },
+      (error) => {
+        console.error('Error al actualizar la película: ', error);
+      }
+    );
 
     this.activeModal.close();
   }

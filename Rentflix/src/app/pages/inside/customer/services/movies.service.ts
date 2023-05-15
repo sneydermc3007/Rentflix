@@ -21,4 +21,42 @@ export class MoviesService {
       catchError((error) => throwError(error))
     )
   }
+
+  crearMovie(pMovie: any) {
+    return this.http.post<any>('http://localhost:5000/peliculas', pMovie, {
+      headers: {'Content-Type': 'application/json'}
+    }).pipe(
+      tap((res) => {
+        // console.log('Respuesta del servidor: ', res)
+        return res
+      }),
+      catchError((error) => throwError(error))
+    )
+  }
+
+  getIdMovie(nombre: string) {
+    return this.http.post<any>('http://localhost:5000//peliculas/ID', {
+      NomPelicula: nombre
+    }, {
+      headers: {'Content-Type': 'application/json'}
+    }).pipe(
+      tap((res) => {
+        return res
+      }),
+      catchError((error) => throwError(error))
+    )
+  }
+
+  editarMovie(idMovie: number, pMovie: any) {
+    return this.http.put<any>(`http://localhost:5000//peliculasUpd/${idMovie}`, pMovie, {
+      headers: {'Content-Type': 'application/json'}
+    }).pipe(
+      tap((res) => {
+        // console.log('Respuesta del servidor: ', res)
+        return res
+      }),
+      catchError((error) => throwError(error))
+    )
+  }
+
 }
