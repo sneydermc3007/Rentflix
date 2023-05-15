@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // Modales
 import { ProvedoresComponent } from './components/provedores/provedores.component';
+import { MoviesComponent } from './components/movies/movies.component';
 
 @Component({
   selector: 'app-admin',
@@ -20,6 +21,7 @@ export class AdminComponent {
 
   openModalPeliculas() {
     console.log("Modal Peliculas");
+    this.modalService.open(MoviesComponent, { size: 'xl', centered: true });
   }
 
   openModalLocales() {

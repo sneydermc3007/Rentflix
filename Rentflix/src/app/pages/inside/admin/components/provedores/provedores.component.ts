@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-provedores',
@@ -23,7 +22,7 @@ export class ProvedoresComponent implements OnInit {
 
   public displayModal = false;
 
-  constructor(private modalService: NgbModal, public activeModal: NgbActiveModal) { }
+  constructor() { }
 
   public nombreProvedor: string = '';
   public webProvedor: string = '';

@@ -1,0 +1,96 @@
+<div class="container" *ngIf="changeView === false">
+  <h2 class="mt-2">{{"Tabla Peliculas en propiedad" | uppercase}}</h2>
+  <table class="table table-striped table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col-1">#</th>
+        <th scope="col-1">Nombre</th>
+        <th scope="col-1">Cantidad</th>
+        <th scope="col-1">Precio</th>
+        <th scope="col-1">Duración</th>
+        <th scope="col-3">Descripción</th>
+        <th scope="col-1">Proveedor</th>
+        <th scope="col-2">Categorias</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movie of ListaPeliculas; index as i">
+        <th scope="row">{{ i + 1}}</th>
+        <td>{{ movie.NomPelicula }}</td>
+        <td>{{ movie.CantDisponible }}</td>
+        <td>{{ movie.Precio }}</td>
+        <td>{{ movie.Duracion }}</td>
+        <td>{{ movie.Sinopsis }}</td>
+        <td>{{ movie.NomProveedor }}</td>
+        <td>{{ movie.NomCategoria }}</td>
+        <td>
+          <button class="btn editPeliculas" (click)="editMovie(movie.NomPelicula)">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="botones">
+    <button class="btn vistaPeliculas mt-3 mb-5" (click)="openFormMovies()">
+      <i class="fa-solid fa-plus"></i>
+      Agregar peliculas
+    </button>
+  </div>
+</div>
+
+<div class="container mb-5" *ngIf="changeView === true">
+  <h2 class="mt-2">{{"Formulario Registro Peliculas" | uppercase}}</h2>
+
+  <form class="mt-4" (ngSubmit)="addMovie()">
+    <div class="m-3 container grid">
+      <div class="row">
+        <!--Row 1-->
+        <div class="col-6">
+          <label>Nombre</label>
+          <input type="text" class="form-control" name="nombre" placeholder="Ingrese el nombre" [(ngModel)]="fieldName">
+        </div>
+        <div class="col-6">
+          <label>Duración</label>
+          <input type="number" class="form-control" name="duration" placeholder="Ingrese el tiempo de duración(minutos)" [(ngModel)]="fieldDuration">
+        </div>
+        <!--Row 2-->
+        <div class="col-6">
+          <label>Provedor</label>
+          <input type="text" class="form-control" name="provedor" placeholder="Ingrese el distribuidor" [(ngModel)]="fieldSupplier">
+        </div>
+        <div class="col-6">
+          <label>Web provedor</label>
+          <input type="text" class="form-control" name="web-provedor" placeholder="Ingrese la web del provedor" [(ngModel)]="fieldWebProvedor">
+        </div>
+        <!--Row 3-->
+        <div class="col-12">
+          <label>Poster pelicula</label>
+          <input type="text" class="form-control" name="img" placeholder="Ingrese el link del poster" [(ngModel)]="fieldPoster">
+        </div>
+        <!--Row 4-->
+        <div class="col-12">
+          <label>Sinopsis</label>
+          <input type="text" class="form-control" name="descripcion" placeholder="Ingrese la Sinopsis" [(ngModel)]="fieldDescription">
+        </div>
+        <!--Row 5-->
+        <div class="col-6">
+          <label>Categorias</label>
+          <input type="text" class="form-control" name="categorias" placeholder="Ingrese las categorias" [(ngModel)]="fieldCategorias">
+        </div>
+        <div class="col-3">
+          <label>Precio</label>
+          <input type="text" class="form-control" name="precio" placeholder="Ingrese el precio" [(ngModel)]="fieldPrice">
+        </div>
+        <div class="col-3">
+          <label>Stock a comprar</label>
+          <input type="text" class="form-control" name="stock" placeholder="Ingrese la catidad de stock" [(ngModel)]="fieldStock">
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn registroMovies mt-3">Registrar una nueva compra</button>
+  </form>
+</div>
+
