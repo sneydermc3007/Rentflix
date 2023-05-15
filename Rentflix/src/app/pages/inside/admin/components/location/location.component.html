@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="changeView === false">
   <h2 class="mt-2">{{"Tabla Locales" | uppercase}}</h2>
   <table class="table table-striped table table-bordered">
     <thead>
@@ -11,11 +11,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let movie of listLocales; index as i">
+      <tr *ngFor="let locales of listLocales; index as i">
         <th scope="row">{{ i + 1}}</th>
-        <td>{{ movie.zonaUbicacion }}</td>
-        <td>{{ movie.direccion }}</td>
-        <td>{{ movie.horario }}</td>
+        <td>{{ locales.zonaUbicacion }}</td>
+        <td>{{ locales.direccion }}</td>
+        <td>{{ locales.horario }}</td>
         <td>
           <button class="btn editarLocal">
             Editar local
@@ -23,4 +23,38 @@
         </td>
     </tbody>
   </table>
+
+  <button class="btn vistaAgregarUbicaciones mt-3 mb-5" (click)="openFormLocales()">
+    <i class="fa-solid fa-plus"></i>
+    Agregar provedores
+  </button>
+</div>
+
+<div class="container mb-5" *ngIf="changeView === true">
+  <h2 class="mt-2">{{"Formulario locales" | uppercase}}</h2>
+  <form class="mt-4" (ngSubmit)="addLocales()">
+    <div class="m-3 container grid">
+      <div class="row">
+        <!--Row 1-->
+        <div class="col-6">
+          <label>Local</label>
+          <input type="text" class="form-control" name="local" placeholder="Ingrese la zona del nuevo local" [(ngModel)]="fieldZona">
+        </div>
+        <div class="col-6">
+          <label>Dirección</label>
+          <input type="text" class="form-control" name="duration" placeholder="Ingrese el direccion del local" [(ngModel)]="fieldDireccion">
+        </div>
+        <!--Row 2-->
+        <div class="col-6">
+          <label>Horarios</label>
+          <select class="form-select" name="horarios" [(ngModel)]="selectHorarioValue">
+            <option *ngFor="let horario of horariosDisponibles" [value]="horario.value">
+              {{ horario.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn registroLocacion mt-3">Registrar una nueva locación</button>
+  </form>
 </div>
