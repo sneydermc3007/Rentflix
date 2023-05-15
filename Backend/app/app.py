@@ -349,6 +349,29 @@ def agregar_local():
     except:
         return jsonify({'mensaje': 'Error al agregar el local'})
     
+# API PUT locales
+@app.route('/localesUpd/<int:id>', methods=['PUT'])
+def actualizar_local(id):
+    datos_local = request.json
+    
+    zonaUbicacion = datos_local.get('zonaUbicacion')
+    direccion = datos_local.get('direccion')
+    idHorario = datos_local.get('idHorario')
+
+    consulta = """
+            UPDATE ventas.Locales 
+            SET zonaUbicacion = %s, direccion = %s, idHorario = %s
+            WHERE idLocal = %s
+        """
+    parametros= (zonaUbicacion, direccion, idHorario, id)
+    cursos.execute(consulta, parametros)
+    conn.commit()
+    
+    if cursos.rowcount == 0:
+        return 'Local no encontrado', 404
+    else:
+        return 'Local actualizado exitosamente', 200
+    
 # API GET horarios
 @app.route('/horariosObt')
 def get_horarios():
