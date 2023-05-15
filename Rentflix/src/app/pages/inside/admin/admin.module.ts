@@ -12,6 +12,7 @@ import { SchedulesComponent } from './components/schedules/schedules.component';
 
 import { MoviesService } from '../customer/services/movies.service';
 import { ProveedoresService } from './services/proveedores.service';
+import { LocalesService } from './services/locales.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ProveedoresService } from './services/proveedores.service';
   ],
   providers: [
     MoviesService,
-    ProveedoresService
+    ProveedoresService,
+    LocalesService
   ]
 })
 export class AdminModule { }
