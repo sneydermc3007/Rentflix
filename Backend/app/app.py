@@ -323,7 +323,32 @@ def get_locales():
         return jsonify(rows)
     except:
         return jsonify({'mensaje': 'Error al obtener los locales'}), 500
+    
+# API POST locales
+@app.route('/locales', methods=['POST'])
+def agregar_local():
+    datos_local = request.json
+    
+    zonaUbicacion = datos_local['zonaUbicacion']
+    direccion = datos_local['direccion']
+    idHorario = datos_local['idHorario']
+    
+    cursos.execute(""" SELECT MAX(idLocal) AS CANTIDADREGISTROS FROM ventas.Locales; """)
+    cantidad_registros = cursos.fetchone()
+    id_local = cantidad_registros['CANTIDADREGISTROS'] + 1
 
+    try:
+        consulta = """
+            INSERT INTO ventas.Locales (idLocal, zonaUbicacion, direccion, idHorario)
+                VALUES (%s,%s,%s,%s)
+        """
+        parametros= (id_local, zonaUbicacion, direccion, idHorario)
+        cursos.execute(consulta, parametros)
+        conn.commit()
+        return jsonify({'mensaje': 'Local agregado correctamente'})
+    except:
+        return jsonify({'mensaje': 'Error al agregar el local'})
+    
 # API GET horarios
 @app.route('/horariosObt')
 def get_horarios():
