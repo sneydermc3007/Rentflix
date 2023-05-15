@@ -11,6 +11,7 @@ import { LocationComponent } from './components/location/location.component';
 import { SchedulesComponent } from './components/schedules/schedules.component';
 
 import { MoviesService } from '../customer/services/movies.service';
+import { ProveedoresService } from './services/proveedores.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MoviesService } from '../customer/services/movies.service';
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
-    MoviesService
+    MoviesService,
+    ProveedoresService
   ]
 })
 export class AdminModule { }

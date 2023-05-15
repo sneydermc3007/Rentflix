@@ -16,13 +16,13 @@
     <tbody>
       <tr *ngFor="let provedor of listProvedores; index as i">
         <th scope="row">{{ i + 1}}</th>
-        <td> {{ provedor.nombreProvedor }} </td>
-        <td> {{ provedor.web }} </td>
+        <td> {{ provedor.NomProveedor }} </td>
+        <td> {{ provedor.SitioWeb }} </td>
         <td>
-          <img src="{{provedor.image}}" alt="...">
+          <img src="{{provedor.Imagen}}" alt="...">
         </td>
         <td>
-          <button class="btn" (click)="openExternalPage(provedor.web)">
+          <button class="btn" (click)="openExternalPage(provedor.SitioWeb)">
             Abrir sitio web
           </button>
         </td>
