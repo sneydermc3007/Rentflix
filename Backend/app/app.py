@@ -314,7 +314,7 @@ def get_prov():
 def get_locales():
     try:
         cursos.execute(""" 
-                       SELECT zonaUbicacion, direccion, 
+                       SELECT idLocal, zonaUbicacion, direccion, 
                         CONCAT(dias, ' desde ', CONVERT(varchar(8), horaInicio, 108), ' hasta ', CONVERT(varchar(8), horaFinal, 108)) AS horario
                         FROM ventas.Locales, ventas.Horarios
                         WHERE ventas.Locales.idHorario = ventas.Horarios.idHorario
