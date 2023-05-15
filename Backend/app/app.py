@@ -324,7 +324,45 @@ def get_locales():
     except:
         return jsonify({'mensaje': 'Error al obtener los locales'}), 500
 
+# API GET horarios
+@app.route('/horariosObt')
+def get_horarios():
+    try:
+        cursos.execute("""
+                    SELECT  idHorario,   
+                       CONCAT(dias, ' desde ', CONVERT(varchar(8), horaInicio, 108), ' hasta ', CONVERT(varchar(8), horaFinal, 108)) AS horario
+                       FROM Ventas.Horarios
+                       """)
+        rows = cursos.fetchall()
+        return jsonify(rows)
+    except:
+        return jsonify({'mensaje': 'Error al obtener los horarios'}), 500
+    
+# API POST horarios
+@app.route('/horarios', methods=['POST'])
+def agregar_horario():
+    datos_horario = request.json
+    
+    dias = datos_horario['dias']
+    horaInicio = datos_horario['horaInicio']
+    horaFinal = datos_horario['horaFinal']
+    
+    cursos.execute(""" SELECT MAX(idHorario) AS CANTIDADREGISTROS FROM ventas.Horarios; """)
+    cantidad_registros = cursos.fetchone()
+    id_horario = cantidad_registros['CANTIDADREGISTROS'] + 1
 
+    try:
+        consulta = """
+            INSERT INTO ventas.Horarios (idHorario, dias, horaInicio, horaFinal)
+                VALUES (%s,%s,%s,%s)
+        """
+        parametros= (id_horario, dias, horaInicio, horaFinal)
+        cursos.execute(consulta, parametros)
+        conn.commit()
+        return jsonify({'mensaje': 'Horario agregado correctamente'})
+    except:
+        return jsonify({'mensaje': 'Error al agregar el horario'})
+        
 
 
 if __name__ == '__main__':
