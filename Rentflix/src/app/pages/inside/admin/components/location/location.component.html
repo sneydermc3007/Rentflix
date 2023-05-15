@@ -17,7 +17,7 @@
         <td>{{ locales.direccion }}</td>
         <td>{{ locales.horario }}</td>
         <td>
-          <button class="btn editarLocal">
+          <button class="btn editarLocal" (click)="editLocales(locales.zonaUbicacion)">
             Editar local
           </button>
         </td>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-6">
           <label>Dirección</label>
-          <input type="text" class="form-control" name="duration" placeholder="Ingrese el direccion del local" [(ngModel)]="fieldDireccion">
+          <input type="text" class="form-control" name="direccion" placeholder="Ingrese el direccion del local" [(ngModel)]="fieldDireccion">
         </div>
         <!--Row 2-->
         <div class="col-6">

@@ -21,7 +21,7 @@ import { LocalesService } from './services/locales.service';
     ProvedoresComponent,
     MoviesComponent,
     LocationComponent,
-    SchedulesComponent
+    SchedulesComponent,
   ],
   imports: [
     CommonModule,

@@ -161,7 +161,6 @@ export class MoviesComponent implements OnInit {
     </div>
   `
 })
-
 export class NgbdModal2Content implements OnInit {
 
   @Input() data: any;

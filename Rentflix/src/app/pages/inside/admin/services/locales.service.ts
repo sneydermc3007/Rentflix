@@ -43,4 +43,15 @@ export class LocalesService {
       catchError((error) => throwError(error))
     )
   }
+
+  editLocales(id: number, data: any) {
+    return this.http.put<any>(`http://localhost:5000/localesUpd/${id}`, data, {
+      headers: {'Content-Type': 'application/json'}
+    }).pipe(
+      tap((res) => {
+        return res
+      }),
+      catchError((error) => throwError(error))
+    )
+  }
 }
