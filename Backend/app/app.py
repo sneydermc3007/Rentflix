@@ -309,6 +309,24 @@ def get_prov():
     return jsonify(rows)
 
 
+# API GET locales (Ubicaciones)
+@app.route('/localesObt')
+def get_locales():
+    try:
+        cursos.execute(""" 
+                       SELECT zonaUbicacion, direccion, 
+                        CONCAT(dias, ' desde ', CONVERT(varchar(8), horaInicio, 108), ' hasta ', CONVERT(varchar(8), horaFinal, 108)) AS horario
+                        FROM ventas.Locales, ventas.Horarios
+                        WHERE ventas.Locales.idHorario = ventas.Horarios.idHorario
+                       """)
+        rows = cursos.fetchall()
+        return jsonify(rows)
+    except:
+        return jsonify({'mensaje': 'Error al obtener los locales'}), 500
+
+
+
+
 if __name__ == '__main__':
     # app.run()
     app.run(debug=True)
