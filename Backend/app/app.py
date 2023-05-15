@@ -193,7 +193,6 @@ def eliminar_pelicula(id_pelicula):
 #API OBTENER PELICULAS
 @app.route('/peliculasObt')
 def get_movie():
-    
     cursos.execute(""" SELECT NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, Peliculas.Imagen, NomProveedor, SitioWeb
                         FROM peliculas.Peliculas, peliculas.DatosProveedor
                         WHERE peliculas.Peliculas.idProveedor = peliculas.DatosProveedor.idProveedor; """)
@@ -225,22 +224,28 @@ def agregar_cita():
 #API AGREGAR DATOS A PROVEEDOR
 @app.route('/proveedores', methods=['POST'])
 def agregar_prov():
+    
     datos_prov = request.json
     
-    id_proveedor = datos_prov['idProveedor']
-    nom_proveedor = datos_prov['NomProveedor']
-    sitioWeb = datos_prov['SitioWeb']
-    Imagen = datos_prov['Imagen']
-
-    consulta = """
-            INSERT INTO peliculas.DatosProveedor (idProveedor, NomProveedor, SitioWeb, Imagen)
-            VALUES (%s,%s,%s,%s)
-        """
-    parametros= (id_proveedor, nom_proveedor,sitioWeb, Imagen)
-    cursos.execute(consulta, parametros)
-    conn.commit()
+    nom_proveedor = datos_prov['nombre']
+    web = datos_prov['web']
+    ima = datos_prov['imagen']
     
-    return jsonify({'mensaje': 'Proveedor agregado correctamente'})
+    cursos.execute(""" SELECT MAX(idProveedor) AS CANTIDADREGISTROS FROM peliculas.DatosProveedor; """)
+    cantidad_registros = cursos.fetchone()
+    id_proveedor = cantidad_registros['CANTIDADREGISTROS'] + 1
+
+    try:
+        consulta = """
+            INSERT INTO peliculas.DatosProveedor (idProveedor, NomProveedor, SitioWeb, Imagen)
+                VALUES (%s,%s,%s,%s)
+        """
+        parametros= (id_proveedor, nom_proveedor, web, ima)
+        cursos.execute(consulta, parametros)
+        conn.commit()
+        return jsonify({'mensaje': 'Proveedor agregado correctamente'})
+    except:
+        return jsonify({'mensaje': 'Error al agregar el proveedor'})
 
 #API PARA ACTUALIZAR PROVEEDOR
 @app.route('/proveedoresUpd/<int:id>', methods=['PUT'])
@@ -266,6 +271,12 @@ def actualizar_prov(id):
         return 'Proveedor actualizado exitosamente', 200 
 
 
+#API GET PROVEEDORES
+@app.route('/proveedoresObt')
+def get_prov():
+    cursos.execute(""" SELECT idProveedor, NomProveedor, SitioWeb, Imagen FROM peliculas.DatosProveedor; """)
+    rows = cursos.fetchall()
+    return jsonify(rows)
 
 if __name__ == '__main__':
     # app.run()
