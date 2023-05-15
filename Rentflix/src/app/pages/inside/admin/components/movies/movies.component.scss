@@ -1,0 +1,53 @@
+div h2 {
+  text-align: center;
+  font-weight: bolder;
+  color: var(--color-secondary);
+}
+
+thead tr th {
+  font-weight: bolder;
+  font-style: italic;
+}
+
+thead{
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+tbody tr td {
+  text-align: center;
+}
+
+button.vistaPeliculas,
+button.registroMovies {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+button.editPeliculas {
+  background-color: var(--color-secondary) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+div.botones {
+  display: flex;
+  gap: 20px;
+}
+
+form label {
+  margin-top: 10px;
+}
+
+button.registroMovies {
+  justify-content: center;
+  display: grid;
+  margin: 0 auto;
+}
+
+label {
+  font-weight: bold;
+  font-style: italic;
+}
+
