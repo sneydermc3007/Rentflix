@@ -144,6 +144,52 @@ def agregar_pelicula():
         return jsonify({'mensaje': 'Error al agregar la película'})
     
 
+#ACTUALIZAR PELICULAS
+@app.route('/peliculasUpd/<int:id_pelicula>', methods=['PUT'])
+def actualizar_pelicula(id_pelicula):
+    # obtiene los datos enviados en el request
+    datos_pelicula = request.json
+
+    # obtiene los datos a actualizar de la película
+    nom_pelicula = datos_pelicula.get('NomPelicula')
+    duracion = datos_pelicula.get('Duracion')
+    precio = datos_pelicula.get('Precio')
+    sinopsis = datos_pelicula.get('Sinopsis')
+    cant_disponible = datos_pelicula.get('CantDisponible')
+    id_proveedor = datos_pelicula.get('idProveedor')
+    id_tipo_pelicula = datos_pelicula.get('idTipoPelicula')
+    imagen = datos_pelicula.get('Imagen')
+
+    # construye la consulta para actualizar la película con el id especificado
+    consulta = """
+        UPDATE peliculas.Peliculas 
+        SET NomPelicula=%s, Duracion=%s, Precio=%s, Sinopsis=%s, CantDisponible=%s, idProveedor=%s, idTipoPelicula=%s, Imagen=%s
+        WHERE idPelicula=%s
+    """
+    # ejecuta la consulta con los parámetros correspondientes
+    parametros = (nom_pelicula, duracion, precio, sinopsis, cant_disponible, id_proveedor, id_tipo_pelicula, imagen, id_pelicula)
+    cursos.execute(consulta, parametros)
+    conn.commit()
+
+    # retorna la película actualizada
+    return jsonify({'mensaje': 'Película actualizada correctamente'})
+
+
+#API ELIMINAR PELICULA
+@app.route('/peliculasDel/<int:id_pelicula>', methods=['DELETE'])
+def eliminar_pelicula(id_pelicula):
+    consulta = "DELETE FROM peliculas.Peliculas WHERE idPelicula = %s"
+    parametros = (id_pelicula)
+
+    cursos.execute(consulta, parametros)
+    conn.commit() 
+
+    if cursos.rowcount > 0:
+        return jsonify({'mensaje': f'Película con id {id_pelicula} eliminada correctamente'})
+    else:
+        return jsonify({'mensaje': f'No se encontró ninguna película con id {id_pelicula}'}), 404
+
+
 #API OBTENER PELICULAS
 @app.route('/peliculasObt')
 def get_movie():
