@@ -149,7 +149,8 @@ def agregar_pelicula():
 def get_movie():
     
     cursos.execute(""" SELECT NomPelicula, Duracion, Precio, Sinopsis, CantDisponible, Peliculas.Imagen, NomProveedor, SitioWeb
-                        FROM peliculas.Peliculas, peliculas.DatosProveedor """)
+                        FROM peliculas.Peliculas, peliculas.DatosProveedor
+                        WHERE peliculas.Peliculas.idProveedor = peliculas.DatosProveedor.idProveedor; """)
     rows = cursos.fetchall()
     return jsonify(rows)
 
