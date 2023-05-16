@@ -1,0 +1,78 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  font-weight: bold;
+  margin-bottom: auto;
+}
+
+hr {
+  border-top: 5px solid var(--bs-yellow);
+  border-radius: 8px;
+  margin: 0rem 0;
+  width: 2.5%;
+  opacity: 0.85;
+}
+
+h3 {
+  font-size: larger;
+}
+
+h4 {
+  font-size: larger;
+  font-weight: unset;
+}
+
+form {
+  margin-left: 1rem;
+}
+
+form div.full_name label,
+form div.date label,
+form div.mail label,
+form div.mobile label,
+form div.gender label,
+form div.password label,
+form div.street label,
+form div.number-street label,
+form div.typeHouse label,
+form div.comments label,
+form div.confirmation-mail label,
+form div.telephone label {
+  font-weight: 600;
+}
+
+form div.full_name .input-group,
+form div.date .input-group,
+form div.mail .input-group,
+form div.mobile .input-group,
+form div.gender .input-group,
+form div.password .input-group,
+form div.confirmation-mail .input-group,
+form div.telephone .input-group {
+  width: 80%;
+}
+
+form div.date .input-group button {
+  border: 1px solid #ced4da;
+  background-color: #e9ecef;
+}
+
+form div.password .input-group button {
+  padding: 0 !important;
+}
+
+textarea {
+  resize: none;
+  max-height: 0.8rem;
+  max-width: 87%;
+}
+
+div.boton button {
+  border-radius: 8px;
+  background: #1F4489 !important;
+  border: none;
+  width: 15%;
+  height: 2.5rem;
+}

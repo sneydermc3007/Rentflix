@@ -1,0 +1,64 @@
+<!-- <p>provedores works!</p> -->
+
+<div class="container" *ngIf="displayModal === false">
+  <h2 class="mt-2">{{"Tabla provedores" | uppercase}}</h2>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Sitio Web</th>
+        <th scope="col">Imagen</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let provedor of listProvedores; index as i">
+        <th scope="row">{{ i + 1}}</th>
+        <td> {{ provedor.NomProveedor }} </td>
+        <td> {{ provedor.SitioWeb }} </td>
+        <td>
+          <img src="{{provedor.Imagen}}" alt="...">
+        </td>
+        <td>
+          <button class="btn" (click)="openExternalPage(provedor.SitioWeb)">
+            Abrir sitio web
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn vistaProvedores mt-3 mb-5" (click)="openFormProvedores()">
+    <i class="fa-solid fa-plus"></i>
+    Agregar provedores
+  </button>
+</div>
+
+<div class="container mb-5" *ngIf="displayModal === true">
+  <h2 class="mt-2">{{"Formulario provedores" | uppercase}}</h2>
+
+  <!-- Formulario para agregar provedores-->
+  <form class="mt-4" (ngSubmit)="registrarProvedor()">
+    <div class="grid">
+      <div class="row">
+        <div class="col-6">
+          <label>Nombre:</label>
+          <input type="text" class="form-control" name="nombre" placeholder="Ingrese un nombre" [(ngModel)]="nombreProvedor">
+        </div>
+        <div class="col-6">
+          <label>Sitio Web:</label>
+          <input type="text" class="form-control"  name="web" placeholder="Ingrese el sitio web" [(ngModel)]="webProvedor">
+        </div>
+        <div class="col-12">
+          <label>Imagen</label>
+          <input type="text" class="form-control" name="img" placeholder="Ingrese el logo del provedor" [(ngModel)]="imageProvedor">
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn registroProvedores mt-3">Registrar nuevo provedor</button>
+  </form>
+
+</div>

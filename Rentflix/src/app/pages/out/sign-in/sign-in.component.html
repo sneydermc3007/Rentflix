@@ -15,11 +15,11 @@
           <div class="grid">
             <div class="col-12 user mb-3">
               <input
-                type="text"
+                type="email"
                 class="form-control"
-                formControlName="usuario_id"
-                placeholder="User"
-                [class.is-invalid]="formuLogIn.get('usuario_id')?.touched && formuLogIn.get('usuario_id')?.invalid"
+                formControlName="usuario_mail"
+                placeholder="Correo"
+                [class.is-invalid]="formuLogIn.get('usuario_mail')?.touched && formuLogIn.get('usuario_mail')?.invalid"
               >
             </div>
 
@@ -28,7 +28,7 @@
                 type="password"
                 class="form-control"
                 formControlName="usuario_pass"
-                placeholder="Password"
+                placeholder="Contraseña"
                 [class.is-invalid]="formuLogIn.get('usuario_pass')?.touched && formuLogIn.get('usuario_pass')?.invalid"
               >
               <span style="color: red;"
@@ -44,7 +44,7 @@
                 class="btn btn-primary"
                 [disabled]="formuLogIn.invalid"
                 >
-                Send
+                Enviar
               </button>
             </div>
 

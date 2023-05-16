@@ -1,0 +1,17 @@
+* {
+  font-family: 'Popins', sans-serif;
+}
+
+nav #navbarNav {
+  justify-content: end;
+}
+
+a.navbar-brand {
+  color: var(--color-secondary);
+  font-size: x-large;
+  font-weight: 700;
+}
+
+nav .nav-item a {
+  color: var(--color-primary);
+}

@@ -1,0 +1,70 @@
+
+<div class="container">
+  <h2 class="title-principal">Citas peliculas</h2>
+</div>
+
+<div class="row m-3">
+  <div class="col-6 sideL">
+    <!-- Formulario para registrar una cita -->
+    <h3 class="mb-3">Registro cita(s)</h3>
+    <form (ngSubmit)="registrarCita()">
+      <div class="row">
+
+        <div class="col-8">
+          <label>Local:</label>
+          <select class="form-select" name="location" [(ngModel)]="selectLocationValue">
+            <option *ngFor="let local of listLocation" [value]="local.value">
+              {{ local.label }}
+            </option>
+          </select>
+
+          <label>Pelicula:</label>
+          <select class="form-select" name="movie" [(ngModel)]="selectMovieValue">
+            <option *ngFor="let movie of peliculasDisponible" [value]="movie.value">
+              {{ movie.label }}
+            </option>
+          </select>
+
+          <label>Fecha cita:</label>
+          <input type="date" class="form-control" name="fecha" placeholder="Fecha cita" required [(ngModel)]="fieldDate">
+
+          <label>Hora cita:</label>
+          <input type="time" class="form-control" name="hora" placeholder="Hora cita" required [(ngModel)]="fieldHour">
+        </div>
+      </div>
+
+      <button type="submit" class="mt-4 btn">
+        <i class="fas fa-save"></i>
+        Guardar
+      </button>
+
+    </form>
+  </div>
+  <div class="col-6 sideR">
+    <!-- Tabla para mostrar las citas registradas -->
+    <h3>Lista citas</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Local</th>
+          <th scope="col">Pelicula</th>
+          <th scope="col">Fecha cita</th>
+          <th scope="col">Hora cita</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cita of reservationUser">
+          <td>{{ cita.local }}</td>
+          <td>{{ cita.pelicula }}</td>
+          <td>{{ cita.date }}</td>
+          <td>{{ cita.hour }}</td>
+          <td class="acciones">
+            <button class="btn btn-danger"> <i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>

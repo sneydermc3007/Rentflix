@@ -1,0 +1,60 @@
+<div class="container">
+  <h2 class="title-principal mt-2">{{"panel administrativo" | uppercase }}</h2>
+</div>
+
+<div class="container mb-5">
+  <div class="grid">
+    <div class="row">
+      <div class="col-6 provedores">
+        <h3>Provedores</h3>
+        <div class="card" style="width: 22.5rem;">
+          <img src="./../../../../assets/img/GuerraStream.png" class="card-img-top" alt="..."/>
+          <div class="card-body">
+            <button class="btn" (click)="openModalProvedores()">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Abrir vista
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 peliculas">
+        <h3>Peliculas</h3>
+        <div class="card" style="width: 22.5rem;">
+          <img src="./../../../../assets/img/FondoMovies.jpg" class="card-img-top" alt="..."/>
+          <div class="card-body">
+            <button class="btn" (click)="openModalPeliculas()">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Abrir vista
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!--Second row-->
+      <div class="col-6 mt-5 locales">
+        <h3>Locales</h3>
+        <div class="card" style="width: 22.5rem;">
+          <img src="./../../../../assets/img/location.png" class="card-img-top" alt="..."/>
+          <div class="card-body">
+            <button class="btn" (click)="openModalLocales()">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Abrir vista
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mt-5 horarios">
+        <h3>Asignación de horarios</h3>
+        <div class="card" style="width: 22.5rem;">
+          <img src="./../../../../assets/img/schedules.jpg" class="card-img-top" alt="..."/>
+          <div class="card-body">
+            <button class="btn" (click)="openModalHorarios()">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Abrir vista
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

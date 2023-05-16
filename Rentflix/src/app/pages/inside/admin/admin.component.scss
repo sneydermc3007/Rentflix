@@ -1,0 +1,44 @@
+.title-principal {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+h3 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+.card {
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.provedores,
+.peliculas,
+.locales,
+.horarios {
+  display: grid;
+  justify-content: center;
+}
+
+.card-body {
+  justify-content: center;
+  display: flex;
+}
+
+button.btn {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+// .provedores .card .card-img-top,
+// .peliculas .card .card-img-top {
+//   border-radius: 20px 20px 20px 20px;
+// }

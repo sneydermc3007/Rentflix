@@ -40,7 +40,7 @@ img.img2 {
 }
 
 form .row div.title{
-  color: #1F4489;
+  color: #fcc139;
   text-transform: uppercase;
 }
 
@@ -63,12 +63,12 @@ form {
   width: 50%;
 }
 
-@media screen and ( min-width: 1288px ) {
-  form .row div.title{
-    color: #fcc139;
-    text-transform: uppercase;
-  }
-}
+// @media screen and ( min-width:1496px ) {
+//   // form .row div.title{
+//   //   color: #1F4489;
+//   //   text-transform: uppercase;
+//   // }
+// }
 
 main form div .contenido input {
   background-color: #f0f0f0;
